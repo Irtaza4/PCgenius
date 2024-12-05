@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "44335332742",
+    "project_id": "pcgenius-2bab7",
+    "storage_bucket": "pcgenius-2bab7.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:44335332742:android:068e27a0a4b583b5280007",
+        "android_client_info": {
+          "package_name": "com.pcgenius.pc_genius"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA6WXqfco0MA4LqqqqlHijzYBIv0DGS4Y0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
