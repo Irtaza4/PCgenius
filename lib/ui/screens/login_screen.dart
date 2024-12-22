@@ -31,7 +31,7 @@ class _LoginScreenState extends State<LoginScreen> {
       loading =true;
     });
     _auth.signInWithEmailAndPassword(email: emailcontroller.text, password: passwordcontroller.text).then((value){
-      Utils().toastMessage(value.user!.email.toString());
+      Utilas().toastMessage(value.user!.email.toString());
       Navigator.push(context, MaterialPageRoute(builder: (context)=>HomeScreen()));
       setState(() {
         loading =false;
