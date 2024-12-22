@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:pc_genius/ui/screens/ai_pc_builder.dart';
+import 'package:pc_genius/ui/screens/custom_build.dart';
 import 'package:pc_genius/ui/screens/signup_screen.dart'; // Adjust your screen navigation here
 import 'package:pc_genius/ui/screens/login_screen.dart'; // Adjust navigation to login if needed
 import 'package:pc_genius/Widgets/round_button.dart';
@@ -108,6 +109,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     setState(() {
                       isLoadingCustomBuild = false;
                     });
+                    Navigator.push(context, MaterialPageRoute(builder: (context)=>CustomBuild()));
 
                   },
                   child: Container(

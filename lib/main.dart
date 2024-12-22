@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pc_genius/FirebaseServices/firebase_helper_processors.dart';
 import 'package:pc_genius/ui/screens/login_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:pc_genius/ui/splash_screen.dart';
@@ -9,6 +10,10 @@ void main() async{
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+  final FirebaseHelperProcessors firebaseHelper = FirebaseHelperProcessors();
+
+  // Add processor data manually when app starts
+  firebaseHelper.addProcessorDataManually();
   runApp(const MyApp());
 }
 
