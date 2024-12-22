@@ -44,8 +44,10 @@ class _AiPcBuilderState extends State<AiPcBuilder> {
       backgroundColor: Colors.black,
       appBar: AppBar(
         title: Text(
-          'Ai Pc Builder',
-          style: TextStyle(fontWeight: FontWeight.w500, color: Colors.white),
+          'AI PC BUILDER',
+          style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white,
+
+          ),
         ),
         actions: [
           IconButton(

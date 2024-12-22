@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart'; // Add this import for FontAwesome icons
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+
+import '../../Models/pc_build_data.dart'; // Add this import for FontAwesome icons
 
 class BuildResultsScreen extends StatelessWidget {
   final String budget;
@@ -7,8 +9,20 @@ class BuildResultsScreen extends StatelessWidget {
 
   const BuildResultsScreen({Key? key, required this.budget, required this.pcType}) : super(key: key);
 
+  // Helper method to convert the budget string to an integer
+  int get budgetValue => int.tryParse(budget) ?? 0;
+
   @override
   Widget build(BuildContext context) {
+    // Find the appropriate PC build based on the budget and PC type
+    var buildData = _getBuildData();
+    if (buildData == null) {
+      return Scaffold(
+        appBar: AppBar(title: Text('No Builds Available')),
+        body: Center(child: Text('No PC builds available for this budget.')),
+      );
+    }
+
     return Scaffold(
       backgroundColor: Colors.black,
       appBar: AppBar(
@@ -43,7 +57,6 @@ class BuildResultsScreen extends StatelessWidget {
                   fontWeight: FontWeight.w500,
                   letterSpacing: 3,
                   wordSpacing: 2,
-
                   shadows: [
                     Shadow(
                       color: Colors.green.withOpacity(0.5),
@@ -106,19 +119,18 @@ class BuildResultsScreen extends StatelessWidget {
                     child: Column(
                       children: [
                         _buildIcon(Icons.computer_outlined, 'Processor'),
-                        Text('AMD Ryzen 9 7950X', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
+                        Text(buildData['Processor']!, style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
                         SizedBox(height: 20),
-                        _buildIcon(Icons.memory, 'Ram'),
-                        Text('128GB DDR5', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
+                        _buildIcon(Icons.memory, 'RAM'),
+                        Text(buildData['RAM']!, style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
                         SizedBox(height: 20),
                         _buildIcon(Icons.storage, 'HDD'),
-                        Text('Seagate 6TB HDD', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
+                        Text(buildData['HDD']!, style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
                         SizedBox(height: 20),
                         _buildIcon(Icons.power, 'Power Supply'),
-                        Text('Corsair AX1600i', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
+                        Text(buildData['PowerSupply']!, style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
                         SizedBox(height: 20),
                       ],
-
                     ),
                   ),
                   // Right side
@@ -126,16 +138,16 @@ class BuildResultsScreen extends StatelessWidget {
                     child: Column(
                       children: [
                         _buildIcon(Icons.video_label, 'Graphics Card (GPU)'),
-                        Text('NVIDIA RTX 4090', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
+                        Text(buildData['GPU']!, style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
                         SizedBox(height: 20),
                         _buildIcon(Icons.storage, 'SSD'),
-                        Text('Samsung 4TB NVMe SSD', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
+                        Text(buildData['SSD']!, style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
                         SizedBox(height: 20),
                         _buildIcon(Icons.developer_board_sharp, 'Motherboard'),
-                        Text('ASUS ROG Crosshair X670E Hero', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
+                        Text(buildData['Motherboard']!, style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
                         SizedBox(height: 20),
                         _buildIcon(Icons.tv, 'Case'),
-                        Text('Lian Li PC-O11 Dynamic XL', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
+                        Text(buildData['Case']!, style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
                         SizedBox(height: 20),
                       ],
                     ),
@@ -147,6 +159,29 @@ class BuildResultsScreen extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  // This method selects the appropriate build data based on the budget and pcType
+  Map<String, String>? _getBuildData() {
+    // Filter builds based on the budget and pcType
+    var builds;
+    if (pcType == 'Gaming') {
+      builds = PcBuildData.gamingBuilds;
+    } else if (pcType == 'Office Work') {
+      builds = PcBuildData.officeWorkBuilds;
+    } else if (pcType == 'Graphic Designing') {
+      builds = PcBuildData.graphicDesigningBuilds;
+    }
+
+    if (builds != null) {
+      for (var build in builds) {
+        if (budgetValue >= build['minBudget'] && budgetValue <= build['maxBudget']) {
+          return build['build'];
+        }
+      }
+    }
+
+    return null; // No build found for the given budget
   }
 
   Widget _buildIcon(IconData icon, String label) {
