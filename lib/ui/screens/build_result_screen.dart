@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-
-import '../../Models/pc_build_data.dart'; // Add this import for FontAwesome icons
+import 'package:pc_genius/Utils/utils.dart';
+import '../../Models/pc_build_data.dart';
 
 class BuildResultsScreen extends StatelessWidget {
   final String budget;
@@ -16,12 +15,6 @@ class BuildResultsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     // Find the appropriate PC build based on the budget and PC type
     var buildData = _getBuildData();
-    if (buildData == null) {
-      return Scaffold(
-        appBar: AppBar(title: Text('No Builds Available')),
-        body: Center(child: Text('No PC builds available for this budget.')),
-      );
-    }
 
     return Scaffold(
       backgroundColor: Colors.black,
@@ -46,7 +39,8 @@ class BuildResultsScreen extends StatelessWidget {
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 40.0),
-        child: SingleChildScrollView(
+        child: buildData.isNotEmpty
+            ? SingleChildScrollView(
           child: Column(
             children: [
               Text(
@@ -156,13 +150,24 @@ class BuildResultsScreen extends StatelessWidget {
               ),
             ],
           ),
+        )
+            : Center(
+          child: Text(
+            'No suitable builds found for this budget and PC type.',
+            style: TextStyle(
+              color: Colors.white,
+              fontSize: 18,
+              fontWeight: FontWeight.bold,
+            ),
+            textAlign: TextAlign.center,
+          ),
         ),
       ),
     );
   }
 
   // This method selects the appropriate build data based on the budget and pcType
-  Map<String, String>? _getBuildData() {
+  Map<String, String> _getBuildData() {
     // Filter builds based on the budget and pcType
     var builds;
     if (pcType == 'Gaming') {
@@ -181,7 +186,8 @@ class BuildResultsScreen extends StatelessWidget {
       }
     }
 
-    return null; // No build found for the given budget
+    Utils().toastMessage('Try Again');
+    return {}; // Return an empty map to stay on the same screen
   }
 
   Widget _buildIcon(IconData icon, String label) {

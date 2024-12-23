@@ -15,16 +15,20 @@ class ProcessorsScreen extends StatefulWidget {
 
 class _ProcessorsScreenState extends State<ProcessorsScreen> {
   final _auth = FirebaseAuth.instance;
-  final ref = FirebaseDatabase.instance.ref('cpus');  // Reference to the 'cpus' node in Firebase
+  final ref = FirebaseDatabase.instance.ref('cpus'); // Reference to the 'cpus' node in Firebase
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.black,  // Setting the scaffold background color to black
+      backgroundColor: Colors.black, // Setting the scaffold background color to black
       appBar: AppBar(
         title: Text(
           'PROCESSORS VARIANTS',
-          style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+            color: Colors.white,
+            fontSize: 18, // Set the desired font size here
+          ),
         ),
         actions: [
           IconButton(
@@ -56,11 +60,12 @@ class _ProcessorsScreenState extends State<ProcessorsScreen> {
           ),
         ),
       ),
+
       body: Column(
         children: [
           Expanded(
             child: FirebaseAnimatedList(
-              query: ref,  // Firebase reference to fetch processors
+              query: ref, // Firebase reference to fetch processors
               itemBuilder: (context, snapshot, animation, index) {
                 // Fetching the processor data from Firebase
                 String imageUrl = snapshot.child('image').value.toString();
@@ -71,17 +76,19 @@ class _ProcessorsScreenState extends State<ProcessorsScreen> {
                 String architecture = snapshot.child('architecture').value.toString();
                 String tdp = snapshot.child('tdp').value.toString();
                 String integratedGraphics = snapshot.child('integratedGraphics').value.toString();
-                String price = snapshot.child('price').value.toString();  // Use 'price' here
+                String price = snapshot.child('price').value.toString(); // Use 'price' here
 
                 return Column(
                   children: [
                     ListTile(
-                      contentPadding: EdgeInsets.symmetric(vertical: 10, horizontal: 15),
-                      leading: Image.network(
-                        imageUrl,
+                      contentPadding: EdgeInsets.symmetric(vertical: 10, horizontal: 8),
+                      leading: SizedBox(
                         width: 60,
                         height: 90,
-                        fit: BoxFit.cover,
+                        child: Image.network(
+                          imageUrl,
+                          fit: BoxFit.cover,
+                        ),
                       ),
                       title: Text(
                         name,
@@ -94,84 +101,17 @@ class _ProcessorsScreenState extends State<ProcessorsScreen> {
                       subtitle: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          // Row layout for each heading and its corresponding data
-                          Row(
-                            children: [
-                              Text(
-                                'Cores: ',
-                                style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
-                              ),
-                              Text(
-                                cores,
-                                style: TextStyle(color: Colors.white),
-                              ),
-                            ],
-                          ),
+                          _buildInfoRow('Cores: ', cores),
                           SizedBox(height: 5),
-                          Row(
-                            children: [
-                              Text(
-                                'Base Clock: ',
-                                style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
-                              ),
-                              Text(
-                                baseClock,
-                                style: TextStyle(color: Colors.white),
-                              ),
-                            ],
-                          ),
+                          _buildInfoRow('Base Clock: ', baseClock),
                           SizedBox(height: 5),
-                          Row(
-                            children: [
-                              Text(
-                                'Boost Clock: ',
-                                style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
-                              ),
-                              Text(
-                                boostClock,
-                                style: TextStyle(color: Colors.white),
-                              ),
-                            ],
-                          ),
+                          _buildInfoRow('Boost Clock: ', boostClock),
                           SizedBox(height: 5),
-                          Row(
-                            children: [
-                              Text(
-                                'Architecture: ',
-                                style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
-                              ),
-                              Text(
-                                architecture,
-                                style: TextStyle(color: Colors.white),
-                              ),
-                            ],
-                          ),
+                          _buildInfoRow('Architecture: ', architecture),
                           SizedBox(height: 5),
-                          Row(
-                            children: [
-                              Text(
-                                'TDP: ',
-                                style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
-                              ),
-                              Text(
-                                tdp,
-                                style: TextStyle(color: Colors.white),
-                              ),
-                            ],
-                          ),
+                          _buildInfoRow('TDP: ', tdp),
                           SizedBox(height: 5),
-                          Row(
-                            children: [
-                              Text(
-                                'Integrated Graphics: ',
-                                style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
-                              ),
-                              Text(
-                                integratedGraphics,
-                                style: TextStyle(color: Colors.white),
-                              ),
-                            ],
-                          ),
+                          _buildInfoRow('Integrated Graphics: ', integratedGraphics),
                           SizedBox(height: 5),
                           Row(
                             children: [
@@ -179,9 +119,12 @@ class _ProcessorsScreenState extends State<ProcessorsScreen> {
                                 'Price: ',
                                 style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
                               ),
-                              Text(
-                                '$price \RS',
-                                style: TextStyle(color: Colors.green),
+                              Flexible(
+                                child: Text(
+                                  '$price \RS',
+                                  style: TextStyle(color: Colors.green),
+                                  overflow: TextOverflow.ellipsis, // Prevents overflow
+                                ),
                               ),
                             ],
                           ),
@@ -212,6 +155,25 @@ class _ProcessorsScreenState extends State<ProcessorsScreen> {
           ),
         ],
       ),
+    );
+  }
+
+  // Helper method to create information rows
+  Widget _buildInfoRow(String label, String value) {
+    return Row(
+      children: [
+        Text(
+          label,
+          style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+        ),
+        Flexible(
+          child: Text(
+            value,
+            style: TextStyle(color: Colors.white),
+            overflow: TextOverflow.ellipsis, // Prevents text overflow
+          ),
+        ),
+      ],
     );
   }
 }

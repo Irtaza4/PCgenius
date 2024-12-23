@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
+import 'package:pc_genius/FirebaseServices/firebase_helper_motherboards.dart';
 import 'package:pc_genius/FirebaseServices/firebase_helper_processors.dart';
 import 'package:pc_genius/ui/screens/login_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -11,13 +13,17 @@ void main() async{
     options: DefaultFirebaseOptions.currentPlatform,
   );
   final FirebaseHelperProcessors firebaseHelper = FirebaseHelperProcessors();
+  final FirebaseHelperMotherboards firebaseHelperMotherboards = FirebaseHelperMotherboards();
+
 
   // Add processor data manually when app starts
-  firebaseHelper.addProcessorDataManually();
+  //firebaseHelper.addProcessorDataManually();
+  //firebaseHelperMotherboards.addMotherboardDataManually();
   runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
+
   const MyApp({super.key});
 
   // This widget is the root of your application.
@@ -26,6 +32,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       debugShowCheckedModeBanner: false,
+
       theme: ThemeData(
         appBarTheme: AppBarTheme(
           iconTheme: IconThemeData(color: Colors.white)
