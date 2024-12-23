@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:pc_genius/FirebaseServices/firebase_helper_motherboards.dart';
 import 'package:pc_genius/FirebaseServices/firebase_helper_processors.dart';
+import 'package:pc_genius/FirebaseServices/firebase_helper_ram.dart';
 import 'package:pc_genius/ui/screens/login_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:pc_genius/ui/splash_screen.dart';
@@ -14,9 +15,10 @@ void main() async{
   );
   final FirebaseHelperProcessors firebaseHelper = FirebaseHelperProcessors();
   final FirebaseHelperMotherboards firebaseHelperMotherboards = FirebaseHelperMotherboards();
-
+final FirebaseHelperRAM firebaseHelperRAM = FirebaseHelperRAM();
 
   // Add processor data manually when app starts
+  //firebaseHelperRAM.addRAMDataManually();
   //firebaseHelper.addProcessorDataManually();
   //firebaseHelperMotherboards.addMotherboardDataManually();
   runApp(const MyApp());
