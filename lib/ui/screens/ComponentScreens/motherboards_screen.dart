@@ -6,16 +6,16 @@ import 'package:flutter/material.dart';
 import '../../../Utils/utils.dart';
 import '../login_screen.dart';
 
-class ProcessorsScreen extends StatefulWidget {
-  const ProcessorsScreen({super.key});
+class MotherboardsScreen extends StatefulWidget {
+  const MotherboardsScreen({super.key});
 
   @override
-  State<ProcessorsScreen> createState() => _ProcessorsScreenState();
+  State<MotherboardsScreen> createState() => _MotherboardsScreenState();
 }
 
-class _ProcessorsScreenState extends State<ProcessorsScreen> {
+class _MotherboardsScreenState extends State<MotherboardsScreen> {
   final _auth = FirebaseAuth.instance;
-  final ref = FirebaseDatabase.instance.ref('cpus'); // Reference to the 'cpus' node in Firebase
+  final ref = FirebaseDatabase.instance.ref('motherboards'); // Reference to the 'motherboards' node in Firebase
 
   @override
   Widget build(BuildContext context) {
@@ -23,11 +23,11 @@ class _ProcessorsScreenState extends State<ProcessorsScreen> {
       backgroundColor: Colors.black, // Setting the scaffold background color to black
       appBar: AppBar(
         title: Text(
-          'PROCESSORS VARIANTS',
+          'MOTHERBOARDS VARIANTS',
           style: TextStyle(
             fontWeight: FontWeight.bold,
             color: Colors.white,
-            fontSize: 18, // Set the desired font size here
+            fontSize: 18,
           ),
         ),
         actions: [
@@ -60,29 +60,27 @@ class _ProcessorsScreenState extends State<ProcessorsScreen> {
           ),
         ),
       ),
-
       body: Column(
         children: [
           Expanded(
             child: FirebaseAnimatedList(
-              query: ref, // Firebase reference to fetch processors
+              query: ref,
               defaultChild: Center(
                 child: CircularProgressIndicator(
-                  valueColor: AlwaysStoppedAnimation<Color>(Colors.greenAccent), // Green accent color
-                  strokeWidth: 4.0, // Adjust thickness
+                  valueColor: AlwaysStoppedAnimation<Color>(Colors.greenAccent),
+                  strokeWidth: 4.0,
                 ),
               ),
               itemBuilder: (context, snapshot, animation, index) {
-                // Fetching the processor data from Firebase
+                // Fetching the motherboard data from Firebase
                 String imageUrl = snapshot.child('image').value.toString();
                 String name = snapshot.child('name').value.toString();
-                String cores = snapshot.child('cores').value.toString();
-                String baseClock = snapshot.child('baseClock').value.toString();
-                String boostClock = snapshot.child('boostClock').value.toString();
-                String architecture = snapshot.child('architecture').value.toString();
-                String tdp = snapshot.child('tdp').value.toString();
-                String integratedGraphics = snapshot.child('integratedGraphics').value.toString();
+                String slots = snapshot.child('slots').value.toString();
                 String price = snapshot.child('price').value.toString();
+                String socket = snapshot.child('socket').value.toString();
+                String maxMemory = snapshot.child('maxMemory').value.toString();
+                String formFactor = snapshot.child('formFactor').value.toString();
+                String color = snapshot.child('color').value.toString();
 
                 return Column(
                   children: [
@@ -92,13 +90,13 @@ class _ProcessorsScreenState extends State<ProcessorsScreen> {
                         width: 60,
                         height: 90,
                         decoration: BoxDecoration(
-                          border: Border.all(color: Colors.greenAccent, width: 2), // Green border
-                          borderRadius: BorderRadius.circular(8), // Rounded corners
+                          border: Border.all(color: Colors.greenAccent, width: 2),
+                          borderRadius: BorderRadius.circular(8),
                           boxShadow: [
                             BoxShadow(
-                              color: Colors.greenAccent.withOpacity(0.5), // Green accent shadow
+                              color: Colors.greenAccent.withOpacity(0.5),
                               blurRadius: 2,
-                              offset: Offset(2, 4), // Shadow offset
+                              offset: Offset(2, 4),
                             ),
                           ],
                           image: DecorationImage(
@@ -118,17 +116,15 @@ class _ProcessorsScreenState extends State<ProcessorsScreen> {
                       subtitle: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          _buildInfoRow('Cores: ', cores),
+                          _buildInfoRow('Slots: ', slots),
                           SizedBox(height: 5),
-                          _buildInfoRow('Base Clock: ', baseClock),
+                          _buildInfoRow('Socket: ', socket),
                           SizedBox(height: 5),
-                          _buildInfoRow('Boost Clock: ', boostClock),
+                          _buildInfoRow('Max Memory: ', maxMemory),
                           SizedBox(height: 5),
-                          _buildInfoRow('Architecture: ', architecture),
+                          _buildInfoRow('Form Factor: ', formFactor),
                           SizedBox(height: 5),
-                          _buildInfoRow('TDP: ', tdp),
-                          SizedBox(height: 5),
-                          _buildInfoRow('Integrated Graphics: ', integratedGraphics),
+                          _buildInfoRow('Color: ', color),
                           SizedBox(height: 5),
                           Row(
                             children: [
@@ -138,9 +134,9 @@ class _ProcessorsScreenState extends State<ProcessorsScreen> {
                               ),
                               Flexible(
                                 child: Text(
-                                  '$price \RS',
+                                  '$price ',
                                   style: TextStyle(color: Colors.green),
-                                  overflow: TextOverflow.ellipsis, // Prevents overflow
+                                  overflow: TextOverflow.ellipsis,
                                 ),
                               ),
                             ],
@@ -164,7 +160,7 @@ class _ProcessorsScreenState extends State<ProcessorsScreen> {
                         ),
                       ),
                     ),
-                    Divider(color: Colors.grey, thickness: 1), // Grey line between variants
+                    Divider(color: Colors.grey, thickness: 1),
                   ],
                 );
               },
@@ -187,7 +183,7 @@ class _ProcessorsScreenState extends State<ProcessorsScreen> {
           child: Text(
             value,
             style: TextStyle(color: Colors.white),
-            overflow: TextOverflow.ellipsis, // Prevents text overflow
+            overflow: TextOverflow.ellipsis,
           ),
         ),
       ],

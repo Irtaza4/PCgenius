@@ -6,28 +6,28 @@ import 'package:flutter/material.dart';
 import '../../../Utils/utils.dart';
 import '../login_screen.dart';
 
-class ProcessorsScreen extends StatefulWidget {
-  const ProcessorsScreen({super.key});
+class RAMScreen extends StatefulWidget {
+  const RAMScreen({super.key});
 
   @override
-  State<ProcessorsScreen> createState() => _ProcessorsScreenState();
+  State<RAMScreen> createState() => _RAMScreenState();
 }
 
-class _ProcessorsScreenState extends State<ProcessorsScreen> {
+class _RAMScreenState extends State<RAMScreen> {
   final _auth = FirebaseAuth.instance;
-  final ref = FirebaseDatabase.instance.ref('cpus'); // Reference to the 'cpus' node in Firebase
+  final ref = FirebaseDatabase.instance.ref('ram'); // Reference to the 'rams' node in Firebase
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.black, // Setting the scaffold background color to black
+      backgroundColor: Colors.black,
       appBar: AppBar(
         title: Text(
-          'PROCESSORS VARIANTS',
+          'RAM VARIANTS',
           style: TextStyle(
             fontWeight: FontWeight.bold,
             color: Colors.white,
-            fontSize: 18, // Set the desired font size here
+            fontSize: 18,
           ),
         ),
         actions: [
@@ -65,23 +65,23 @@ class _ProcessorsScreenState extends State<ProcessorsScreen> {
         children: [
           Expanded(
             child: FirebaseAnimatedList(
-              query: ref, // Firebase reference to fetch processors
+              query: ref, // Firebase reference to fetch RAM variants
               defaultChild: Center(
                 child: CircularProgressIndicator(
-                  valueColor: AlwaysStoppedAnimation<Color>(Colors.greenAccent), // Green accent color
-                  strokeWidth: 4.0, // Adjust thickness
+                  valueColor: AlwaysStoppedAnimation<Color>(Colors.greenAccent),
+                  strokeWidth: 4.0,
                 ),
               ),
               itemBuilder: (context, snapshot, animation, index) {
-                // Fetching the processor data from Firebase
-                String imageUrl = snapshot.child('image').value.toString();
-                String name = snapshot.child('name').value.toString();
-                String cores = snapshot.child('cores').value.toString();
-                String baseClock = snapshot.child('baseClock').value.toString();
-                String boostClock = snapshot.child('boostClock').value.toString();
-                String architecture = snapshot.child('architecture').value.toString();
-                String tdp = snapshot.child('tdp').value.toString();
-                String integratedGraphics = snapshot.child('integratedGraphics').value.toString();
+                // Fetching the RAM data from Firebase
+                String imageUrl = snapshot.child('image_url').value.toString();
+                String brandModel = snapshot.child('brand_model').value.toString();
+                String capacity = snapshot.child('capacity').value.toString();
+                String casLatency = snapshot.child('cas_latency').value.toString();
+                String latency = snapshot.child('latency').value.toString();
+                String color = snapshot.child('color').value.toString();
+                String modelConfiguration = snapshot.child('module_configuration').value.toString();
+                String typeSpeed = snapshot.child('type_speed').value.toString();
                 String price = snapshot.child('price').value.toString();
 
                 return Column(
@@ -92,13 +92,13 @@ class _ProcessorsScreenState extends State<ProcessorsScreen> {
                         width: 60,
                         height: 90,
                         decoration: BoxDecoration(
-                          border: Border.all(color: Colors.greenAccent, width: 2), // Green border
-                          borderRadius: BorderRadius.circular(8), // Rounded corners
+                          border: Border.all(color: Colors.greenAccent, width: 2),
+                          borderRadius: BorderRadius.circular(8),
                           boxShadow: [
                             BoxShadow(
-                              color: Colors.greenAccent.withOpacity(0.5), // Green accent shadow
+                              color: Colors.greenAccent.withOpacity(0.5),
                               blurRadius: 2,
-                              offset: Offset(2, 4), // Shadow offset
+                              offset: Offset(2, 4),
                             ),
                           ],
                           image: DecorationImage(
@@ -108,7 +108,7 @@ class _ProcessorsScreenState extends State<ProcessorsScreen> {
                         ),
                       ),
                       title: Text(
-                        name,
+                        brandModel,
                         style: TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.bold,
@@ -118,17 +118,17 @@ class _ProcessorsScreenState extends State<ProcessorsScreen> {
                       subtitle: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          _buildInfoRow('Cores: ', cores),
+                          _buildInfoRow('Capacity: ', capacity),
                           SizedBox(height: 5),
-                          _buildInfoRow('Base Clock: ', baseClock),
+                          _buildInfoRow('CAS Latency: ', casLatency),
                           SizedBox(height: 5),
-                          _buildInfoRow('Boost Clock: ', boostClock),
+                          _buildInfoRow('Latency: ', latency),
                           SizedBox(height: 5),
-                          _buildInfoRow('Architecture: ', architecture),
+                          _buildInfoRow('Color: ', color),
                           SizedBox(height: 5),
-                          _buildInfoRow('TDP: ', tdp),
+                          _buildInfoRow('Configuration: ', modelConfiguration),
                           SizedBox(height: 5),
-                          _buildInfoRow('Integrated Graphics: ', integratedGraphics),
+                          _buildInfoRow('Type/Speed: ', typeSpeed),
                           SizedBox(height: 5),
                           Row(
                             children: [
@@ -140,7 +140,7 @@ class _ProcessorsScreenState extends State<ProcessorsScreen> {
                                 child: Text(
                                   '$price \RS',
                                   style: TextStyle(color: Colors.green),
-                                  overflow: TextOverflow.ellipsis, // Prevents overflow
+                                  overflow: TextOverflow.ellipsis,
                                 ),
                               ),
                             ],
@@ -149,8 +149,7 @@ class _ProcessorsScreenState extends State<ProcessorsScreen> {
                       ),
                       trailing: ElevatedButton(
                         onPressed: () {
-                          // Add your action for the 'Add' button here
-                          print("Added $name to the build");
+                          print("Added $brandModel to the build");
                         },
                         style: ElevatedButton.styleFrom(
                           backgroundColor: Colors.green,
@@ -164,7 +163,7 @@ class _ProcessorsScreenState extends State<ProcessorsScreen> {
                         ),
                       ),
                     ),
-                    Divider(color: Colors.grey, thickness: 1), // Grey line between variants
+                    Divider(color: Colors.grey, thickness: 1),
                   ],
                 );
               },
@@ -187,7 +186,7 @@ class _ProcessorsScreenState extends State<ProcessorsScreen> {
           child: Text(
             value,
             style: TextStyle(color: Colors.white),
-            overflow: TextOverflow.ellipsis, // Prevents text overflow
+            overflow: TextOverflow.ellipsis,
           ),
         ),
       ],

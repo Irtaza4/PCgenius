@@ -6,24 +6,26 @@ import 'package:flutter/material.dart';
 import '../../../Utils/utils.dart';
 import '../login_screen.dart';
 
-class ProcessorsScreen extends StatefulWidget {
-  const ProcessorsScreen({super.key});
+class GPUScreen extends StatefulWidget {
+  const GPUScreen({super.key});
 
   @override
-  State<ProcessorsScreen> createState() => _ProcessorsScreenState();
+  State<GPUScreen> createState() => _GPUScreenState();
 }
 
-class _ProcessorsScreenState extends State<ProcessorsScreen> {
+class _GPUScreenState extends State<GPUScreen> {
   final _auth = FirebaseAuth.instance;
-  final ref = FirebaseDatabase.instance.ref('cpus'); // Reference to the 'cpus' node in Firebase
+  final ref = FirebaseDatabase.instance
+      .ref('gpu'); // Reference to the 'gpu' node in Firebase
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.black, // Setting the scaffold background color to black
+      backgroundColor: Colors.black,
+      // Setting the scaffold background color to black
       appBar: AppBar(
         title: Text(
-          'PROCESSORS VARIANTS',
+          'GPU VARIANTS',
           style: TextStyle(
             fontWeight: FontWeight.bold,
             color: Colors.white,
@@ -55,7 +57,10 @@ class _ProcessorsScreenState extends State<ProcessorsScreen> {
             gradient: LinearGradient(
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
-              colors: [Colors.black, Colors.green],
+              colors: [
+                Colors.black,
+                Colors.green
+              ], // Color change to green for GPU section
             ),
           ),
         ),
@@ -65,38 +70,45 @@ class _ProcessorsScreenState extends State<ProcessorsScreen> {
         children: [
           Expanded(
             child: FirebaseAnimatedList(
-              query: ref, // Firebase reference to fetch processors
+              query: ref, // Firebase reference to fetch GPUs
               defaultChild: Center(
                 child: CircularProgressIndicator(
-                  valueColor: AlwaysStoppedAnimation<Color>(Colors.greenAccent), // Green accent color
+                  valueColor: AlwaysStoppedAnimation<Color>(Colors.greenAccent),
+                  // Green accent color
                   strokeWidth: 4.0, // Adjust thickness
                 ),
               ),
               itemBuilder: (context, snapshot, animation, index) {
-                // Fetching the processor data from Firebase
-                String imageUrl = snapshot.child('image').value.toString();
-                String name = snapshot.child('name').value.toString();
-                String cores = snapshot.child('cores').value.toString();
-                String baseClock = snapshot.child('baseClock').value.toString();
-                String boostClock = snapshot.child('boostClock').value.toString();
-                String architecture = snapshot.child('architecture').value.toString();
-                String tdp = snapshot.child('tdp').value.toString();
-                String integratedGraphics = snapshot.child('integratedGraphics').value.toString();
+                // Fetching the GPU data from Firebase
+                String imageUrl = snapshot.child('image_url').value.toString();
+                String model = snapshot.child('model').value.toString();
+                String vram = snapshot.child('vram').value.toString();
+                String length = snapshot.child('length').value.toString();
+                String baseClock =
+                    snapshot.child('base_clock').value.toString();
+                String boostClock =
+                    snapshot.child('boost_clock').value.toString();
+                String color = snapshot.child('color').value.toString();
                 String price = snapshot.child('price').value.toString();
 
                 return Column(
                   children: [
                     ListTile(
-                      contentPadding: EdgeInsets.symmetric(vertical: 10, horizontal: 8),
+                      contentPadding:
+                          EdgeInsets.symmetric(vertical: 10, horizontal: 8),
                       leading: Container(
                         width: 60,
                         height: 90,
                         decoration: BoxDecoration(
-                          border: Border.all(color: Colors.greenAccent, width: 2), // Green border
-                          borderRadius: BorderRadius.circular(8), // Rounded corners
+                          border:
+                              Border.all(color: Colors.greenAccent, width: 2),
+                          // Green border for GPU section
+                          borderRadius: BorderRadius.circular(8),
+                          // Rounded corners
                           boxShadow: [
                             BoxShadow(
-                              color: Colors.greenAccent.withOpacity(0.5), // Green accent shadow
+                              color: Colors.greenAccent.withOpacity(0.5),
+                              // Green accent shadow
                               blurRadius: 2,
                               offset: Offset(2, 4), // Shadow offset
                             ),
@@ -108,7 +120,7 @@ class _ProcessorsScreenState extends State<ProcessorsScreen> {
                         ),
                       ),
                       title: Text(
-                        name,
+                        model,
                         style: TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.bold,
@@ -118,29 +130,30 @@ class _ProcessorsScreenState extends State<ProcessorsScreen> {
                       subtitle: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          _buildInfoRow('Cores: ', cores),
+                          _buildInfoRow('VRAM: ', vram),
+                          SizedBox(height: 5),
+                          _buildInfoRow('Length: ', length),
                           SizedBox(height: 5),
                           _buildInfoRow('Base Clock: ', baseClock),
                           SizedBox(height: 5),
                           _buildInfoRow('Boost Clock: ', boostClock),
                           SizedBox(height: 5),
-                          _buildInfoRow('Architecture: ', architecture),
-                          SizedBox(height: 5),
-                          _buildInfoRow('TDP: ', tdp),
-                          SizedBox(height: 5),
-                          _buildInfoRow('Integrated Graphics: ', integratedGraphics),
+                          _buildInfoRow('Color: ', color),
                           SizedBox(height: 5),
                           Row(
                             children: [
                               Text(
                                 'Price: ',
-                                style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold),
                               ),
                               Flexible(
                                 child: Text(
-                                  '$price \RS',
-                                  style: TextStyle(color: Colors.green),
-                                  overflow: TextOverflow.ellipsis, // Prevents overflow
+                                  '$price ',
+                                  style: TextStyle(color: Colors.greenAccent),
+                                  overflow: TextOverflow
+                                      .ellipsis, // Prevents overflow
                                 ),
                               ),
                             ],
@@ -150,10 +163,11 @@ class _ProcessorsScreenState extends State<ProcessorsScreen> {
                       trailing: ElevatedButton(
                         onPressed: () {
                           // Add your action for the 'Add' button here
-                          print("Added $name to the build");
+                          print("Added $model to the build");
                         },
                         style: ElevatedButton.styleFrom(
                           backgroundColor: Colors.green,
+                          // Green button for adding GPU
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(8),
                           ),
@@ -164,7 +178,8 @@ class _ProcessorsScreenState extends State<ProcessorsScreen> {
                         ),
                       ),
                     ),
-                    Divider(color: Colors.grey, thickness: 1), // Grey line between variants
+                    Divider(color: Colors.grey, thickness: 1),
+                    // Grey line between variants
                   ],
                 );
               },

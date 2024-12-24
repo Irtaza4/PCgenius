@@ -6,16 +6,16 @@ import 'package:flutter/material.dart';
 import '../../../Utils/utils.dart';
 import '../login_screen.dart';
 
-class ProcessorsScreen extends StatefulWidget {
-  const ProcessorsScreen({super.key});
+class PowerSuppliesScreen extends StatefulWidget {
+  const PowerSuppliesScreen({super.key});
 
   @override
-  State<ProcessorsScreen> createState() => _ProcessorsScreenState();
+  State<PowerSuppliesScreen> createState() => _PowerSuppliesScreenState();
 }
 
-class _ProcessorsScreenState extends State<ProcessorsScreen> {
+class _PowerSuppliesScreenState extends State<PowerSuppliesScreen> {
   final _auth = FirebaseAuth.instance;
-  final ref = FirebaseDatabase.instance.ref('cpus'); // Reference to the 'cpus' node in Firebase
+  final ref = FirebaseDatabase.instance.ref('power_supplies'); // Reference to the 'power_supplies' node in Firebase
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +23,7 @@ class _ProcessorsScreenState extends State<ProcessorsScreen> {
       backgroundColor: Colors.black, // Setting the scaffold background color to black
       appBar: AppBar(
         title: Text(
-          'PROCESSORS VARIANTS',
+          'POWER SUPPLIES VARIANTS',
           style: TextStyle(
             fontWeight: FontWeight.bold,
             color: Colors.white,
@@ -65,7 +65,7 @@ class _ProcessorsScreenState extends State<ProcessorsScreen> {
         children: [
           Expanded(
             child: FirebaseAnimatedList(
-              query: ref, // Firebase reference to fetch processors
+              query: ref, // Firebase reference to fetch power supplies
               defaultChild: Center(
                 child: CircularProgressIndicator(
                   valueColor: AlwaysStoppedAnimation<Color>(Colors.greenAccent), // Green accent color
@@ -73,16 +73,15 @@ class _ProcessorsScreenState extends State<ProcessorsScreen> {
                 ),
               ),
               itemBuilder: (context, snapshot, animation, index) {
-                // Fetching the processor data from Firebase
-                String imageUrl = snapshot.child('image').value.toString();
+                // Fetching the power supply data from Firebase
+                String imageUrl = snapshot.child('image_url').value.toString();
                 String name = snapshot.child('name').value.toString();
-                String cores = snapshot.child('cores').value.toString();
-                String baseClock = snapshot.child('baseClock').value.toString();
-                String boostClock = snapshot.child('boostClock').value.toString();
-                String architecture = snapshot.child('architecture').value.toString();
-                String tdp = snapshot.child('tdp').value.toString();
-                String integratedGraphics = snapshot.child('integratedGraphics').value.toString();
-                String price = snapshot.child('price').value.toString();
+                String modular = snapshot.child('modular').value.toString();
+                String pricePkr = snapshot.child('price_pkr').value.toString();
+                String type = snapshot.child('type').value.toString();
+                String color = snapshot.child('color').value.toString();
+                String certification = snapshot.child('certification').value.toString();
+                String wattage = snapshot.child('wattage').value.toString();
 
                 return Column(
                   children: [
@@ -118,17 +117,13 @@ class _ProcessorsScreenState extends State<ProcessorsScreen> {
                       subtitle: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          _buildInfoRow('Cores: ', cores),
+                          _buildInfoRow('Modular: ', modular),
                           SizedBox(height: 5),
-                          _buildInfoRow('Base Clock: ', baseClock),
+                          _buildInfoRow('Type: ', type),
                           SizedBox(height: 5),
-                          _buildInfoRow('Boost Clock: ', boostClock),
+                          _buildInfoRow('Color: ', color),
                           SizedBox(height: 5),
-                          _buildInfoRow('Architecture: ', architecture),
-                          SizedBox(height: 5),
-                          _buildInfoRow('TDP: ', tdp),
-                          SizedBox(height: 5),
-                          _buildInfoRow('Integrated Graphics: ', integratedGraphics),
+                          _buildInfoRow('Certification: ', certification),
                           SizedBox(height: 5),
                           Row(
                             children: [
@@ -138,13 +133,15 @@ class _ProcessorsScreenState extends State<ProcessorsScreen> {
                               ),
                               Flexible(
                                 child: Text(
-                                  '$price \RS',
+                                  '$pricePkr \RS',
                                   style: TextStyle(color: Colors.green),
                                   overflow: TextOverflow.ellipsis, // Prevents overflow
                                 ),
                               ),
                             ],
                           ),
+                          SizedBox(height: 5),
+                          _buildInfoRow('Wattage: ', wattage),
                         ],
                       ),
                       trailing: ElevatedButton(

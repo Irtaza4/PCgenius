@@ -6,16 +6,16 @@ import 'package:flutter/material.dart';
 import '../../../Utils/utils.dart';
 import '../login_screen.dart';
 
-class ProcessorsScreen extends StatefulWidget {
-  const ProcessorsScreen({super.key});
+class CasesScreen extends StatefulWidget {
+  const CasesScreen({super.key});
 
   @override
-  State<ProcessorsScreen> createState() => _ProcessorsScreenState();
+  State<CasesScreen> createState() => _CasesScreenState();
 }
 
-class _ProcessorsScreenState extends State<ProcessorsScreen> {
+class _CasesScreenState extends State<CasesScreen> {
   final _auth = FirebaseAuth.instance;
-  final ref = FirebaseDatabase.instance.ref('cpus'); // Reference to the 'cpus' node in Firebase
+  final ref = FirebaseDatabase.instance.ref('cases'); // Reference to the 'cases' node in Firebase
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +23,7 @@ class _ProcessorsScreenState extends State<ProcessorsScreen> {
       backgroundColor: Colors.black, // Setting the scaffold background color to black
       appBar: AppBar(
         title: Text(
-          'PROCESSORS VARIANTS',
+          'PC CASE VARIANTS',
           style: TextStyle(
             fontWeight: FontWeight.bold,
             color: Colors.white,
@@ -65,7 +65,7 @@ class _ProcessorsScreenState extends State<ProcessorsScreen> {
         children: [
           Expanded(
             child: FirebaseAnimatedList(
-              query: ref, // Firebase reference to fetch processors
+              query: ref, // Firebase reference to fetch cases
               defaultChild: Center(
                 child: CircularProgressIndicator(
                   valueColor: AlwaysStoppedAnimation<Color>(Colors.greenAccent), // Green accent color
@@ -73,16 +73,15 @@ class _ProcessorsScreenState extends State<ProcessorsScreen> {
                 ),
               ),
               itemBuilder: (context, snapshot, animation, index) {
-                // Fetching the processor data from Firebase
-                String imageUrl = snapshot.child('image').value.toString();
+                // Fetching the case data from Firebase
+                String imageUrl = snapshot.child('image_url').value.toString();
                 String name = snapshot.child('name').value.toString();
-                String cores = snapshot.child('cores').value.toString();
-                String baseClock = snapshot.child('baseClock').value.toString();
-                String boostClock = snapshot.child('boostClock').value.toString();
-                String architecture = snapshot.child('architecture').value.toString();
-                String tdp = snapshot.child('tdp').value.toString();
-                String integratedGraphics = snapshot.child('integratedGraphics').value.toString();
-                String price = snapshot.child('price').value.toString();
+                String internalBays = snapshot.child('internal_bays').value.toString();
+                String sidePanel = snapshot.child('side_panel').value.toString();
+                String type = snapshot.child('type').value.toString();
+                String volume = snapshot.child('volume').value.toString();
+                String pricePkr = snapshot.child('price_pkr').value.toString();
+                String color = snapshot.child('color').value.toString(); // Fetch color
 
                 return Column(
                   children: [
@@ -118,33 +117,31 @@ class _ProcessorsScreenState extends State<ProcessorsScreen> {
                       subtitle: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          _buildInfoRow('Cores: ', cores),
+                          _buildInfoRow('Internal Bays: ', internalBays),
                           SizedBox(height: 5),
-                          _buildInfoRow('Base Clock: ', baseClock),
+                          _buildInfoRow('Side Panel: ', sidePanel),
                           SizedBox(height: 5),
-                          _buildInfoRow('Boost Clock: ', boostClock),
+                          _buildInfoRow('Type: ', type),
                           SizedBox(height: 5),
-                          _buildInfoRow('Architecture: ', architecture),
-                          SizedBox(height: 5),
-                          _buildInfoRow('TDP: ', tdp),
-                          SizedBox(height: 5),
-                          _buildInfoRow('Integrated Graphics: ', integratedGraphics),
+                          _buildInfoRow('Volume: ', volume),
                           SizedBox(height: 5),
                           Row(
                             children: [
                               Text(
-                                'Price: ',
+                                'Price (PKR): ',
                                 style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
                               ),
                               Flexible(
                                 child: Text(
-                                  '$price \RS',
+                                  '$pricePkr',
                                   style: TextStyle(color: Colors.green),
                                   overflow: TextOverflow.ellipsis, // Prevents overflow
                                 ),
                               ),
                             ],
                           ),
+                          SizedBox(height: 5),
+                          _buildInfoRow('Color: ', color), // Display color
                         ],
                       ),
                       trailing: ElevatedButton(
