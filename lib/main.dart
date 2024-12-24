@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:pc_genius/FirebaseServices/firebase_helper_cases.dart';
+import 'package:pc_genius/FirebaseServices/firebase_helper_gpu.dart';
 import 'package:pc_genius/FirebaseServices/firebase_helper_motherboards.dart';
+import 'package:pc_genius/FirebaseServices/firebase_helper_powersupllies.dart';
 import 'package:pc_genius/FirebaseServices/firebase_helper_processors.dart';
 import 'package:pc_genius/FirebaseServices/firebase_helper_ram.dart';
 import 'package:pc_genius/ui/screens/login_screen.dart';
@@ -16,9 +19,15 @@ void main() async{
   final FirebaseHelperProcessors firebaseHelper = FirebaseHelperProcessors();
   final FirebaseHelperMotherboards firebaseHelperMotherboards = FirebaseHelperMotherboards();
 final FirebaseHelperRAM firebaseHelperRAM = FirebaseHelperRAM();
+final FirebaseHelperGPU firebaseHelperGPU=FirebaseHelperGPU();
+  final FirebaseHelperPowerSupply firebaseHelperPowerSupply=FirebaseHelperPowerSupply();
+  final FirebaseHelperCase firebaseHelperCase=FirebaseHelperCase();
 
   // Add processor data manually when app starts
-  //firebaseHelperRAM.addRAMDataManually();
+  // firebaseHelperCase.addCaseDataManually();
+  // firebaseHelperPowerSupply.addPowerSupplyDataManually();
+  // firebaseHelperGPU.addGPUDataManually();
+  // firebaseHelperRAM.addRAMDataManually();
   //firebaseHelper.addProcessorDataManually();
   //firebaseHelperMotherboards.addMotherboardDataManually();
   runApp(const MyApp());
