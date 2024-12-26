@@ -48,6 +48,7 @@ class CustomButton extends StatelessWidget {
               children: [
                 Icon(icon, color: textColor, size: 24), // Use dynamic text color
                 SizedBox(width: 8),
+
                 Text(
                   label,
                   style: TextStyle(
