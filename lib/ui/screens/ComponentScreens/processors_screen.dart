@@ -7,7 +7,7 @@ import '../../../Utils/utils.dart';
 import '../login_screen.dart';
 
 class ProcessorsScreen extends StatefulWidget {
-  const ProcessorsScreen({super.key});
+  const ProcessorsScreen({super.key, Map<String, String>? selectedProcessor});
 
   @override
   State<ProcessorsScreen> createState() => _ProcessorsScreenState();
@@ -16,18 +16,19 @@ class ProcessorsScreen extends StatefulWidget {
 class _ProcessorsScreenState extends State<ProcessorsScreen> {
   final _auth = FirebaseAuth.instance;
   final ref = FirebaseDatabase.instance.ref('cpus'); // Reference to the 'cpus' node in Firebase
+  String? selectedProcessorId; // Stores the ID of the selected processor
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.black, // Setting the scaffold background color to black
+      backgroundColor: Colors.black,
       appBar: AppBar(
         title: Text(
           'PROCESSORS VARIANTS',
           style: TextStyle(
             fontWeight: FontWeight.bold,
             color: Colors.white,
-            fontSize: 18, // Set the desired font size here
+            fontSize: 18,
           ),
         ),
         actions: [
@@ -60,20 +61,20 @@ class _ProcessorsScreenState extends State<ProcessorsScreen> {
           ),
         ),
       ),
-
       body: Column(
         children: [
           Expanded(
             child: FirebaseAnimatedList(
-              query: ref, // Firebase reference to fetch processors
+              query: ref,
               defaultChild: Center(
                 child: CircularProgressIndicator(
-                  valueColor: AlwaysStoppedAnimation<Color>(Colors.greenAccent), // Green accent color
-                  strokeWidth: 4.0, // Adjust thickness
+                  valueColor: AlwaysStoppedAnimation<Color>(Colors.greenAccent),
+                  strokeWidth: 4.0,
                 ),
               ),
               itemBuilder: (context, snapshot, animation, index) {
-                // Fetching the processor data from Firebase
+                // Fetch processor data
+                String processorId = snapshot.key ?? ''; // Unique ID of the processor
                 String imageUrl = snapshot.child('image').value.toString();
                 String name = snapshot.child('name').value.toString();
                 String cores = snapshot.child('cores').value.toString();
@@ -84,6 +85,8 @@ class _ProcessorsScreenState extends State<ProcessorsScreen> {
                 String integratedGraphics = snapshot.child('integratedGraphics').value.toString();
                 String price = snapshot.child('price').value.toString();
 
+                bool isSelected = processorId == selectedProcessorId;
+
                 return Column(
                   children: [
                     ListTile(
@@ -92,13 +95,13 @@ class _ProcessorsScreenState extends State<ProcessorsScreen> {
                         width: 60,
                         height: 90,
                         decoration: BoxDecoration(
-                          border: Border.all(color: Colors.greenAccent, width: 2), // Green border
-                          borderRadius: BorderRadius.circular(8), // Rounded corners
+                          border: Border.all(color: Colors.greenAccent, width: 2),
+                          borderRadius: BorderRadius.circular(8),
                           boxShadow: [
                             BoxShadow(
-                              color: Colors.greenAccent.withOpacity(0.5), // Green accent shadow
+                              color: Colors.greenAccent.withOpacity(0.5),
                               blurRadius: 2,
-                              offset: Offset(2, 4), // Shadow offset
+                              offset: Offset(2, 4),
                             ),
                           ],
                           image: DecorationImage(
@@ -119,17 +122,11 @@ class _ProcessorsScreenState extends State<ProcessorsScreen> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           _buildInfoRow('Cores: ', cores),
-                          SizedBox(height: 5),
                           _buildInfoRow('Base Clock: ', baseClock),
-                          SizedBox(height: 5),
                           _buildInfoRow('Boost Clock: ', boostClock),
-                          SizedBox(height: 5),
                           _buildInfoRow('Architecture: ', architecture),
-                          SizedBox(height: 5),
                           _buildInfoRow('TDP: ', tdp),
-                          SizedBox(height: 5),
                           _buildInfoRow('Integrated Graphics: ', integratedGraphics),
-                          SizedBox(height: 5),
                           Row(
                             children: [
                               Text(
@@ -140,7 +137,7 @@ class _ProcessorsScreenState extends State<ProcessorsScreen> {
                                 child: Text(
                                   '$price \RS',
                                   style: TextStyle(color: Colors.green),
-                                  overflow: TextOverflow.ellipsis, // Prevents overflow
+                                  overflow: TextOverflow.ellipsis,
                                 ),
                               ),
                             ],
@@ -149,22 +146,28 @@ class _ProcessorsScreenState extends State<ProcessorsScreen> {
                       ),
                       trailing: ElevatedButton(
                         onPressed: () {
-                          // Add your action for the 'Add' button here
-                          print("Added $name to the build");
+                          setState(() {
+                            selectedProcessorId = processorId;
+                          });
+                          Navigator.pop(context, {
+                            'image': imageUrl,
+                            'name': name,
+                            'price': price,
+                          });
                         },
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.green,
+                          backgroundColor: isSelected ? Colors.black : Colors.green,
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(8),
                           ),
                         ),
                         child: Text(
-                          'Add',
-                          style: TextStyle(color: Colors.white),
+                          isSelected ? 'Added' : 'Add',
+                          style: TextStyle(color: isSelected ? Colors.green : Colors.white),
                         ),
                       ),
                     ),
-                    Divider(color: Colors.grey, thickness: 1), // Grey line between variants
+                    Divider(color: Colors.grey, thickness: 1),
                   ],
                 );
               },
@@ -175,7 +178,6 @@ class _ProcessorsScreenState extends State<ProcessorsScreen> {
     );
   }
 
-  // Helper method to create information rows
   Widget _buildInfoRow(String label, String value) {
     return Row(
       children: [
@@ -187,7 +189,7 @@ class _ProcessorsScreenState extends State<ProcessorsScreen> {
           child: Text(
             value,
             style: TextStyle(color: Colors.white),
-            overflow: TextOverflow.ellipsis, // Prevents text overflow
+            overflow: TextOverflow.ellipsis,
           ),
         ),
       ],

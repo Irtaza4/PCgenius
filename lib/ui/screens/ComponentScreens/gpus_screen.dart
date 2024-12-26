@@ -7,7 +7,7 @@ import '../../../Utils/utils.dart';
 import '../login_screen.dart';
 
 class GPUScreen extends StatefulWidget {
-  const GPUScreen({super.key});
+  const GPUScreen({super.key, Map<String, String>? selectedGpu});
 
   @override
   State<GPUScreen> createState() => _GPUScreenState();
@@ -17,6 +17,7 @@ class _GPUScreenState extends State<GPUScreen> {
   final _auth = FirebaseAuth.instance;
   final ref = FirebaseDatabase.instance
       .ref('gpu'); // Reference to the 'gpu' node in Firebase
+  String? selectedGpuId;
 
   @override
   Widget build(BuildContext context) {
@@ -80,6 +81,7 @@ class _GPUScreenState extends State<GPUScreen> {
               ),
               itemBuilder: (context, snapshot, animation, index) {
                 // Fetching the GPU data from Firebase
+                String gpuId = snapshot.key ?? '';
                 String imageUrl = snapshot.child('image_url').value.toString();
                 String model = snapshot.child('model').value.toString();
                 String vram = snapshot.child('vram').value.toString();
@@ -90,6 +92,8 @@ class _GPUScreenState extends State<GPUScreen> {
                     snapshot.child('boost_clock').value.toString();
                 String color = snapshot.child('color').value.toString();
                 String price = snapshot.child('price').value.toString();
+
+                bool isSelected = gpuId == selectedGpuId;
 
                 return Column(
                   children: [
@@ -162,19 +166,24 @@ class _GPUScreenState extends State<GPUScreen> {
                       ),
                       trailing: ElevatedButton(
                         onPressed: () {
-                          // Add your action for the 'Add' button here
-                          print("Added $model to the build");
+                          setState(() {
+                            selectedGpuId = gpuId;
+                          });
+                          Navigator.pop(context, {
+                            'image_url': imageUrl,
+                            'model': model,
+                            'price': price,
+                          });
                         },
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.green,
-                          // Green button for adding GPU
+                          backgroundColor: isSelected ? Colors.black : Colors.green,
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(8),
                           ),
                         ),
                         child: Text(
-                          'Add',
-                          style: TextStyle(color: Colors.white),
+                          isSelected ? 'Added' : 'Add',
+                          style: TextStyle(color: isSelected ? Colors.green : Colors.white),
                         ),
                       ),
                     ),

@@ -6,8 +6,9 @@ import 'package:pc_genius/ui/screens/ComponentScreens/motherboards_screen.dart';
 import 'package:pc_genius/ui/screens/ComponentScreens/power_supplies_screen.dart';
 import 'package:pc_genius/ui/screens/ComponentScreens/processors_screen.dart';
 import 'package:pc_genius/ui/screens/ComponentScreens/rams_screen.dart';
-import 'package:pc_genius/ui/screens/login_screen.dart'; // Adjust navigation to login if needed
-import '../../Utils/utils.dart'; // Your custom round button widget
+import 'package:pc_genius/ui/screens/login_screen.dart';
+import '../../Utils/utils.dart';
+import '../../Widgets/Custom_button.dart';
 
 class CustomBuild extends StatefulWidget {
   const CustomBuild({super.key});
@@ -18,16 +19,19 @@ class CustomBuild extends StatefulWidget {
 
 class _CustomBuildState extends State<CustomBuild> {
   final _auth = FirebaseAuth.instance;
-  bool isLoadingCustomBuild = false;
-  bool isLoadingAIBuild = false;
-  Map<int, bool> buttonLoadingStates =
-      {}; // Track individual button loading states
+  bool isLoadingProcessor = false;
+  bool isLoadingRAM = false;
+  bool isLoadingMotherboard = false;
+  bool isLoadingGPU = false;
+  bool isLoadingPowerSupply = false;
+  bool isLoadingCases = false;
 
-  void setButtonLoadingState(int index, bool isLoading) {
-    setState(() {
-      buttonLoadingStates[index] = isLoading;
-    });
-  }
+  Map<String, String>? selectedProcessor;
+  Map<String, String>? selectedRam;
+  Map<String, String>? selectedGpus;
+  Map<String, String>? selectedPowerSupplies;
+  Map<String, String>? selectedMotherBoards;
+  Map<String, String>? selectedCases;
 
   @override
   Widget build(BuildContext context) {
@@ -72,9 +76,7 @@ class _CustomBuildState extends State<CustomBuild> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            SizedBox(
-              height: 15,
-            ),
+            SizedBox(height: 15),
             Center(
               child: Text(
                 'ADD COMPONENTS',
@@ -93,431 +95,205 @@ class _CustomBuildState extends State<CustomBuild> {
                 ),
               ),
             ),
-            SizedBox(height: 1),
+            SizedBox(height: 10),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              // Distribute space evenly between the columns
               children: [
                 Flexible(
                   child: Padding(
                     padding: const EdgeInsets.symmetric(
                         horizontal: 27, vertical: 20),
                     child: Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      // Align the buttons at the top
                       crossAxisAlignment: CrossAxisAlignment.center,
-                      // Center the buttons horizontally
                       children: [
-                        Material(
-                          color: Colors.transparent,
-                          child: InkWell(
-                            splashColor: Colors.transparent,
-                            highlightColor: Colors.transparent,
-                            onTap: () async {
-                              setButtonLoadingState(
-                                  0, true); // Set loading state for button 0
-                              await Future.delayed(
-                                  Duration(seconds: 1)); // Simulate loading
-                              setButtonLoadingState(
-                                  0, false); // Reset loading state
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) =>
-                                          ProcessorsScreen()));
-                            },
-                            child: Container(
-                              height: 60,
-                              width: double.infinity,
-                              // Use full width of the parent
-                              decoration: BoxDecoration(
-                                color: Colors.black,
-                                borderRadius: BorderRadius.circular(20),
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Colors.greenAccent.withOpacity(0.3),
-                                    spreadRadius: 3,
-                                    blurRadius: 5,
-                                    offset: Offset(0, 3),
-                                  ),
-                                ],
-                              ),
-                              child: Center(
-                                child: buttonLoadingStates[0] == true
-                                    ? CircularProgressIndicator(
-                                        color: Colors.white)
-                                    : Row(
-                                        mainAxisSize: MainAxisSize.min,
-                                        children: [
-                                          Icon(Icons.computer_outlined,
-                                              color: Colors.white, size: 24),
-                                          SizedBox(width: 4),
-                                          Text(
-                                            "PROCESSOR",
-                                            style: TextStyle(
-                                              color: Colors.white,
-                                              fontWeight: FontWeight.w800,
-                                              fontSize: 11,
-                                              shadows: [
-                                                Shadow(
-                                                  color: Colors.black
-                                                      .withOpacity(0.5),
-                                                  offset: Offset(2.0, 2.0),
-                                                  blurRadius: 5.0,
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                              ),
-                            ),
-                          ),
+                        CustomButton(
+                          label: "PROCESSOR",
+                          icon: Icons.computer_outlined,
+                          onTap: () async {
+                            setState(() {
+                              isLoadingProcessor = true;
+                            });
+
+                            final selectedProcessorData = await Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => ProcessorsScreen()),
+                            );
+
+                            setState(() {
+                              isLoadingProcessor = false;
+                              if (selectedProcessorData != null) {
+                                selectedProcessor = selectedProcessorData;
+                              }
+                            });
+                          },
+                          isLoading: isLoadingProcessor,
+                          backgroundColor: selectedProcessor != null
+                              ? Colors.green
+                              : Colors.black,
+                          textColor: selectedProcessor != null
+                              ? Colors.black
+                              : Colors.white,
                         ),
                         SizedBox(height: 20),
-                        Material(
-                          color: Colors.transparent,
-                          child: InkWell(
-                            splashColor: Colors.transparent,
-                            highlightColor: Colors.transparent,
-                            onTap: () async {
-                              setButtonLoadingState(
-                                  1, true); // Set loading state for button 1
-                              await Future.delayed(
-                                  Duration(seconds: 1)); // Simulate loading
-                              setButtonLoadingState(
-                                  1, false); // Reset loading state
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => RAMScreen()));
-                            },
-                            child: Container(
-                              height: 60,
-                              width: double.infinity,
-                              // Use full width of the parent
-                              decoration: BoxDecoration(
-                                color: Colors.black,
-                                borderRadius: BorderRadius.circular(20),
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Colors.greenAccent.withOpacity(0.3),
-                                    spreadRadius: 3,
-                                    blurRadius: 5,
-                                    offset: Offset(0, 3),
-                                  ),
-                                ],
-                              ),
-                              child: Center(
-                                child: buttonLoadingStates[1] == true
-                                    ? CircularProgressIndicator(
-                                        color: Colors.white)
-                                    : Row(
-                                        mainAxisSize: MainAxisSize.min,
-                                        children: [
-                                          Icon(Icons.memory,
-                                              color: Colors.white, size: 24),
-                                          SizedBox(width: 8),
-                                          Text(
-                                            "RAM",
-                                            style: TextStyle(
-                                              color: Colors.white,
-                                              fontWeight: FontWeight.w800,
-                                              fontSize: 12,
-                                              shadows: [
-                                                Shadow(
-                                                  color: Colors.black
-                                                      .withOpacity(0.5),
-                                                  offset: Offset(2.0, 2.0),
-                                                  blurRadius: 5.0,
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                              ),
-                            ),
-                          ),
+                        CustomButton(
+                          label: "RAM",
+                          icon: Icons.memory,
+                          onTap: () async {
+                            setState(() {
+                              isLoadingRAM = true;
+                            });
+
+                            final selectedRamData = await Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => RAMScreen()),
+                            );
+
+                            setState(() {
+                              isLoadingRAM = false;
+                              if (selectedRamData != null) {
+                                selectedRam = selectedRamData;
+                              }
+                            });
+                          },
+                          isLoading: isLoadingRAM,
+                          backgroundColor: selectedRam != null
+                              ? Colors.green
+                              : Colors.black,
+                          textColor: selectedRam != null
+                              ? Colors.black
+                              : Colors.white,
                         ),
                         SizedBox(height: 20),
-                        Material(
-                          color: Colors.transparent,
-                          child: InkWell(
-                            splashColor: Colors.transparent,
-                            highlightColor: Colors.transparent,
-                            onTap: () async {
-                              setButtonLoadingState(
-                                  2, true); // Set loading state for button 2
-                              await Future.delayed(
-                                  Duration(seconds: 1)); // Simulate loading
-                              setButtonLoadingState(
-                                  2, false); // Reset loading state
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) =>
-                                          MotherboardsScreen()));
-                            },
-                            child: Container(
-                              height: 60,
-                              width: double.infinity,
-                              // Use full width of the parent
-                              decoration: BoxDecoration(
-                                color: Colors.black,
-                                borderRadius: BorderRadius.circular(20),
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Colors.greenAccent.withOpacity(0.3),
-                                    spreadRadius: 3,
-                                    blurRadius: 5,
-                                    offset: Offset(0, 3),
-                                  ),
-                                ],
-                              ),
-                              child: Center(
-                                child: buttonLoadingStates[2] == true
-                                    ? CircularProgressIndicator(
-                                        color: Colors.white)
-                                    : Row(
-                                        mainAxisSize: MainAxisSize.min,
-                                        children: [
-                                          Icon(Icons.developer_board_sharp,
-                                              color: Colors.white, size: 24),
-                                          SizedBox(width: 3),
-                                          Text(
-                                            "MOTHERBOARD",
-                                            style: TextStyle(
-                                              color: Colors.white,
-                                              fontWeight: FontWeight.w800,
-                                              fontSize: 12,
-                                              shadows: [
-                                                Shadow(
-                                                  color: Colors.black
-                                                      .withOpacity(0.5),
-                                                  offset: Offset(2.0, 2.0),
-                                                  blurRadius: 5.0,
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                              ),
-                            ),
-                          ),
+                        CustomButton(
+                          label: "MOTHERBOARD",
+                          icon: Icons.developer_board_sharp,
+                          onTap: () async {
+                            setState(() {
+                              isLoadingMotherboard = true;
+                            });
+
+                            final selectedMotherboardData = await Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => MotherboardsScreen()),
+                            );
+
+                            setState(() {
+                              isLoadingMotherboard = false;
+                              if (selectedMotherboardData != null) {
+                                selectedMotherBoards = selectedMotherboardData;
+                              }
+                            });
+                          },
+                          isLoading: isLoadingMotherboard,
+                          backgroundColor: selectedMotherBoards != null
+                              ? Colors.green
+                              : Colors.black,
+                          textColor: selectedMotherBoards != null
+                              ? Colors.black
+                              : Colors.white,
                         ),
                       ],
                     ),
                   ),
                 ),
-                //SizedBox(width: 5), // Add space between the two columns
                 Flexible(
                   child: Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 27),
                     child: Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      // Align the buttons at the top
                       crossAxisAlignment: CrossAxisAlignment.center,
-                      // Center the buttons horizontally
                       children: [
-                        Material(
-                          color: Colors.transparent,
-                          child: InkWell(
-                            splashColor: Colors.transparent,
-                            highlightColor: Colors.transparent,
-                            onTap: () async {
-                              setButtonLoadingState(
-                                  3, true); // Set loading state for button 3
-                              await Future.delayed(
-                                  Duration(seconds: 1)); // Simulate loading
-                              setButtonLoadingState(
-                                  3, false); // Reset loading state
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => GPUScreen()));
-                            },
-                            child: Container(
-                              height: 60,
-                              width: double.infinity,
-                              // Use full width of the parent
-                              decoration: BoxDecoration(
-                                color: Colors.black,
-                                borderRadius: BorderRadius.circular(20),
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Colors.greenAccent.withOpacity(0.3),
-                                    spreadRadius: 3,
-                                    blurRadius: 5,
-                                    offset: Offset(0, 3),
-                                  ),
-                                ],
-                              ),
-                              child: Center(
-                                child: buttonLoadingStates[3] == true
-                                    ? CircularProgressIndicator(
-                                        color: Colors.white)
-                                    : Row(
-                                        mainAxisSize: MainAxisSize.min,
-                                        children: [
-                                          Icon(Icons.video_label,
-                                              color: Colors.white, size: 24),
-                                          SizedBox(width: 8),
-                                          Text(
-                                            "GPU",
-                                            style: TextStyle(
-                                              color: Colors.white,
-                                              fontWeight: FontWeight.w800,
-                                              fontSize: 12,
-                                              shadows: [
-                                                Shadow(
-                                                  color: Colors.black
-                                                      .withOpacity(0.5),
-                                                  offset: Offset(2.0, 2.0),
-                                                  blurRadius: 5.0,
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                              ),
-                            ),
-                          ),
+                        CustomButton(
+                          label: "GPU",
+                          icon: Icons.video_label,
+                          onTap: () async {
+                            setState(() {
+                              isLoadingGPU = true;
+                            });
+
+                            final selectedGpuData = await Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => GPUScreen()),
+                            );
+
+                            setState(() {
+                              isLoadingGPU = false;
+                              if (selectedGpuData != null) {
+                                selectedGpus = selectedGpuData;
+                              }
+                            });
+                          },
+                          isLoading: isLoadingGPU,
+                          backgroundColor: selectedGpus != null
+                              ? Colors.green
+                              : Colors.black,
+                          textColor: selectedGpus != null
+                              ? Colors.black
+                              : Colors.white,
                         ),
                         SizedBox(height: 20),
-                        Material(
-                          color: Colors.transparent,
-                          child: InkWell(
-                            splashColor: Colors.transparent,
-                            highlightColor: Colors.transparent,
-                            onTap: () async {
-                              setButtonLoadingState(
-                                  4, true); // Set loading state for button 4
-                              await Future.delayed(
-                                  Duration(seconds: 1)); // Simulate loading
-                              setButtonLoadingState(
-                                  4, false); // Reset loading state
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) =>
-                                          PowerSuppliesScreen()));
-                            },
-                            child: Container(
-                              height: 60,
-                              width: double.infinity,
-                              // Use full width of the parent
-                              decoration: BoxDecoration(
-                                color: Colors.black,
-                                borderRadius: BorderRadius.circular(20),
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Colors.greenAccent.withOpacity(0.3),
-                                    spreadRadius: 3,
-                                    blurRadius: 5,
-                                    offset: Offset(0, 3),
-                                  ),
-                                ],
-                              ),
-                              child: Center(
-                                child: buttonLoadingStates[4] == true
-                                    ? CircularProgressIndicator(
-                                        color: Colors.white)
-                                    : Row(
-                                        mainAxisSize: MainAxisSize.min,
-                                        children: [
-                                          Icon(Icons.power,
-                                              color: Colors.white, size: 24),
-                                          SizedBox(width: 8),
-                                          Text(
-                                            "POWER\nSUPPLY",
-                                            style: TextStyle(
-                                              color: Colors.white,
-                                              fontWeight: FontWeight.w800,
-                                              fontSize: 12,
-                                              shadows: [
-                                                Shadow(
-                                                  color: Colors.black
-                                                      .withOpacity(0.5),
-                                                  offset: Offset(2.0, 2.0),
-                                                  blurRadius: 5.0,
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                              ),
-                            ),
-                          ),
+                        CustomButton(
+                          label: "POWER SUPPLY",
+                          icon: Icons.power,
+                          onTap: () async {
+                            setState(() {
+                              isLoadingPowerSupply = true;
+                            });
+
+                            final selectedPowerSupplyData =
+                            await Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => PowerSuppliesScreen()),
+                            );
+
+                            setState(() {
+                              isLoadingPowerSupply = false;
+                              if (selectedPowerSupplyData != null) {
+                                selectedPowerSupplies = selectedPowerSupplyData;
+                              }
+                            });
+                          },
+                          isLoading: isLoadingPowerSupply,
+                          backgroundColor: selectedPowerSupplies != null
+                              ? Colors.green
+                              : Colors.black,
+                          textColor: selectedPowerSupplies != null
+                              ? Colors.black
+                              : Colors.white,
                         ),
                         SizedBox(height: 20),
-                        Material(
-                          color: Colors.transparent,
-                          child: InkWell(
-                            splashColor: Colors.transparent,
-                            highlightColor: Colors.transparent,
-                            onTap: () async {
-                              setButtonLoadingState(
-                                  5, true); // Set loading state for button 5
-                              await Future.delayed(
-                                  Duration(seconds: 1)); // Simulate loading
-                              setButtonLoadingState(
-                                  5, false); // Reset loading state
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => CasesScreen()));
-                            },
-                            child: Container(
-                              height: 60,
-                              width: double.infinity,
-                              // Use full width of the parent
-                              decoration: BoxDecoration(
-                                color: Colors.black,
-                                borderRadius: BorderRadius.circular(20),
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Colors.greenAccent.withOpacity(0.3),
-                                    spreadRadius: 3,
-                                    blurRadius: 5,
-                                    offset: Offset(0, 3),
-                                  ),
-                                ],
-                              ),
-                              child: Center(
-                                child: buttonLoadingStates[5] == true
-                                    ? CircularProgressIndicator(
-                                        color: Colors.white)
-                                    : Row(
-                                        mainAxisSize: MainAxisSize.min,
-                                        children: [
-                                          Icon(Icons.tv,
-                                              color: Colors.white, size: 24),
-                                          SizedBox(width: 8),
-                                          Text(
-                                            "CASES",
-                                            style: TextStyle(
-                                              color: Colors.white,
-                                              fontWeight: FontWeight.w800,
-                                              fontSize: 12,
-                                              shadows: [
-                                                Shadow(
-                                                  color: Colors.black
-                                                      .withOpacity(0.5),
-                                                  offset: Offset(2.0, 2.0),
-                                                  blurRadius: 5.0,
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                              ),
-                            ),
-                          ),
+                        CustomButton(
+                          label: "CASES",
+                          icon: Icons.tv,
+                          onTap: () async {
+                            setState(() {
+                              isLoadingCases = true;
+                            });
+
+                            final selectedCasesData = await Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => CasesScreen()),
+                            );
+
+                            setState(() {
+                              isLoadingCases = false;
+                              if (selectedCasesData != null) {
+                                selectedCases = selectedCasesData;
+                              }
+                            });
+                          },
+                          isLoading: isLoadingCases,
+                          backgroundColor: selectedCases != null
+                              ? Colors.green
+                              : Colors.black,
+                          textColor: selectedCases != null
+                              ? Colors.black
+                              : Colors.white,
                         ),
                       ],
                     ),
@@ -525,9 +301,460 @@ class _CustomBuildState extends State<CustomBuild> {
                 ),
               ],
             ),
+            SizedBox(height: 20),
+            Column(
+              children: [
+                // Processor Card
+                if (selectedProcessor != null)
+                  Card(
+                    margin: EdgeInsets.symmetric(vertical: 4),
+                    elevation: 5,
+                    color: Colors.black,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                      side: BorderSide(
+                        color: selectedProcessor != null ? Colors.greenAccent : Colors.black,
+                        width: 2,
+                      ),
+                    ),
+                    child: ListTile(
+                      contentPadding: EdgeInsets.symmetric(vertical: 8, horizontal: 12),
+                      leading: Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(8),
+                          border: Border.all(color: Colors.transparent, width: 0),
+                        ),
+                        child: Image.network(selectedProcessor!['image']!, width: 40, height: 40),
+                      ),
+                      title: Text(
+                        selectedProcessor!['name']!,
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      ),
+                      subtitle: Text(
+                        ' ${selectedProcessor!['price']} PKR',
+                        style: TextStyle(color: Colors.green, fontSize: 14),
+                      ),
+                      trailing: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          IconButton(
+                            icon: Icon(Icons.delete, color: Colors.red),
+                            onPressed: () {
+                              setState(() {
+                                selectedProcessor = null;
+                              });
+                            },
+                          ),
+                          IconButton(
+                            icon: Icon(Icons.update, color: Colors.greenAccent), // Change color here
+                            onPressed: () async {
+                              final updatedProcessor = await Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => ProcessorsScreen(
+                                    selectedProcessor: selectedProcessor, // Pass current selection
+                                  ),
+                                ),
+                              );
+
+                              if (updatedProcessor != null) {
+                                setState(() {
+                                  selectedProcessor = updatedProcessor; // Update with the new selection
+                                });
+                              }
+                            },
+                          ),
+                        ],
+                      ),
+                    ),
+                  )
+                else
+                  Container(),
+
+                Divider(color: Colors.transparent),
+
+                // RAM Card
+                if (selectedRam != null)
+                  Card(
+                    margin: EdgeInsets.symmetric(vertical: 4),
+                    elevation: 5,
+                    color: Colors.black,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                      side: BorderSide(
+                        color: selectedRam != null ? Colors.greenAccent : Colors.black,
+                        width: 2,
+                      ),
+                    ),
+                    child: ListTile(
+                      contentPadding: EdgeInsets.symmetric(vertical: 8, horizontal: 12),
+                      leading: Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(8),
+                          border: Border.all(color: Colors.transparent, width: 0),
+                        ),
+                        child: Image.network(selectedRam!['image_url']!, width: 40, height: 40),
+                      ),
+                      title: Text(
+                        selectedRam!['brand_model']!,
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      ),
+                      subtitle: Text(
+                        ' ${selectedRam!['price']} ',
+                        style: TextStyle(color: Colors.green, fontSize: 14),
+                      ),
+                      trailing: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          IconButton(
+                            icon: Icon(Icons.delete, color: Colors.red),
+                            onPressed: () {
+                              setState(() {
+                                selectedRam = null;
+                              });
+                            },
+                          ),
+                          IconButton(
+                            icon: Icon(Icons.update, color: Colors.greenAccent), // Change color here
+                            onPressed: () async {
+                              final updatedRam = await Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => RAMScreen(
+                                    selectedRam: selectedRam, // Pass current selection
+                                  ),
+                                ),
+                              );
+
+                              if (updatedRam != null) {
+                                setState(() {
+                                  selectedRam = updatedRam; // Update with the new selection
+                                });
+                              }
+                            },
+                          ),
+                        ],
+                      ),
+                    ),
+                  )
+                else
+                  Container(),
+
+                Divider(color: Colors.transparent),
+
+                // Motherboard Card
+                if (selectedMotherBoards != null)
+                  Card(
+                    margin: EdgeInsets.symmetric(vertical: 4),
+                    elevation: 5,
+                    color: Colors.black,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                      side: BorderSide(
+                        color: selectedMotherBoards != null ? Colors.greenAccent : Colors.black,
+                        width: 2,
+                      ),
+                    ),
+                    child: ListTile(
+                      contentPadding: EdgeInsets.symmetric(vertical: 8, horizontal: 12),
+                      leading: Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(8),
+                          border: Border.all(color: Colors.transparent, width: 0),
+                        ),
+                        child: Image.network(selectedMotherBoards!['image']!, width: 40, height: 40),
+                      ),
+                      title: Text(
+                        selectedMotherBoards!['name']!,
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      ),
+                      subtitle: Text(
+                        ' ${selectedMotherBoards!['price']} ',
+                        style: TextStyle(color: Colors.green, fontSize: 14),
+                      ),
+                      trailing: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          IconButton(
+                            icon: Icon(Icons.delete, color: Colors.red),
+                            onPressed: () {
+                              setState(() {
+                                selectedMotherBoards = null;
+                              });
+                            },
+                          ),
+                          IconButton(
+                            icon: Icon(Icons.update, color: Colors.greenAccent), // Change color here
+                            onPressed: () async {
+                              final updatedMotherboard = await Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => MotherboardsScreen(
+                                    selectedMotherBoard: selectedMotherBoards, // Pass current selection
+                                  ),
+                                ),
+                              );
+
+                              if (updatedMotherboard != null) {
+                                setState(() {
+                                  selectedMotherBoards = updatedMotherboard; // Update with the new selection
+                                });
+                              }
+                            },
+                          ),
+                        ],
+                      ),
+                    ),
+                  )
+                else
+                  Container(),
+
+                Divider(color: Colors.transparent),
+
+                // GPU Card
+                if (selectedGpus != null)
+                  Card(
+                    margin: EdgeInsets.symmetric(vertical: 4),
+                    elevation: 5,
+                    color: Colors.black,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                      side: BorderSide(
+                        color: selectedGpus != null ? Colors.greenAccent : Colors.black,
+                        width: 2,
+                      ),
+                    ),
+                    child: ListTile(
+                      contentPadding: EdgeInsets.symmetric(vertical: 8, horizontal: 12),
+                      leading: Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(8),
+                          border: Border.all(color: Colors.transparent, width: 0),
+                        ),
+                        child: Image.network(selectedGpus!['image_url']!, width: 40, height: 40),
+                      ),
+                      title: Text(
+                        selectedGpus!['model']!,
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      ),
+                      subtitle: Text(
+                        ' ${selectedGpus!['price']} ',
+                        style: TextStyle(color: Colors.green, fontSize: 14),
+                      ),
+                      trailing: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          IconButton(
+                            icon: Icon(Icons.delete, color: Colors.red),
+                            onPressed: () {
+                              setState(() {
+                                selectedGpus = null;
+                              });
+                            },
+                          ),
+                          IconButton(
+                            icon: Icon(Icons.update, color: Colors.greenAccent), // Change color here
+                            onPressed: () async {
+                              final updatedGpu = await Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => GPUScreen(
+                                    selectedGpu: selectedGpus, // Pass current selection
+                                  ),
+                                ),
+                              );
+
+                              if (updatedGpu != null) {
+                                setState(() {
+                                  selectedGpus = updatedGpu; // Update with the new selection
+                                });
+                              }
+                            },
+                          ),
+                        ],
+                      ),
+                    ),
+                  )
+                else
+                  Container(),
+
+                Divider(color: Colors.transparent),
+
+                // Power Supply Card
+                if (selectedPowerSupplies != null)
+                  Card(
+                    margin: EdgeInsets.symmetric(vertical: 4),
+                    elevation: 5,
+                    color: Colors.black,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                      side: BorderSide(
+                        color: selectedPowerSupplies != null ? Colors.greenAccent : Colors.black,
+                        width: 2,
+                      ),
+                    ),
+                    child: ListTile(
+                      contentPadding: EdgeInsets.symmetric(vertical: 8, horizontal: 12),
+                      leading: Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(8),
+                          border: Border.all(color: Colors.transparent, width: 0),
+                        ),
+                        child: Image.network(selectedPowerSupplies!['image_url']!, width: 40, height: 40),
+                      ),
+                      title: Text(
+                        selectedPowerSupplies!['name']!,
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      ),
+                      subtitle: Text(
+                        ' ${selectedPowerSupplies!['price_pkr']} PKR',
+                        style: TextStyle(color: Colors.green, fontSize: 14),
+                      ),
+                      trailing: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          IconButton(
+                            icon: Icon(Icons.delete, color: Colors.red),
+                            onPressed: () {
+                              setState(() {
+                                selectedPowerSupplies = null;
+                              });
+                            },
+                          ),
+                          IconButton(
+                            icon: Icon(Icons.update, color: Colors.greenAccent), // Change color here
+                            onPressed: () async {
+                              final updatedPowerSupply = await Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => PowerSuppliesScreen(
+                                    selectedPowerSupply: selectedPowerSupplies, // Pass current selection
+                                  ),
+                                ),
+                              );
+
+                              if (updatedPowerSupply != null) {
+                                setState(() {
+                                  selectedPowerSupplies = updatedPowerSupply; // Update with the new selection
+                                });
+                              }
+                            },
+                          ),
+                        ],
+                      ),
+                    ),
+                  )
+                else
+                  Container(),
+
+                Divider(color: Colors.transparent),
+
+                // Case Card
+                if (selectedCases != null)
+                  Card(
+                    margin: EdgeInsets.symmetric(vertical: 4),
+                    elevation: 5,
+                    color: Colors.black,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                      side: BorderSide(
+                        color: selectedCases != null ? Colors.greenAccent : Colors.black,
+                        width: 2,
+                      ),
+                    ),
+                    child: ListTile(
+                      contentPadding: EdgeInsets.symmetric(vertical: 8, horizontal: 12),
+                      leading: Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(8),
+                          border: Border.all(color: Colors.transparent, width: 0),
+                        ),
+                        child: Image.network(selectedCases!['image_url']!, width: 40, height: 40),
+                      ),
+                      title: Text(
+                        selectedCases!['name']!,
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      ),
+                      subtitle: Text(
+                        ' ${selectedCases!['price_pkr']} PKR',
+                        style: TextStyle(color: Colors.green, fontSize: 14),
+                      ),
+                      trailing: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          IconButton(
+                            icon: Icon(Icons.delete, color: Colors.red),
+                            onPressed: () {
+                              setState(() {
+                                selectedCases = null;
+                              });
+                            },
+                          ),
+                          IconButton(
+                            icon: Icon(Icons.update, color: Colors.greenAccent), // Change color here
+                            onPressed: () async {
+                              final updatedCase = await Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => CasesScreen(
+                                    selectedCase: selectedCases, // Pass current selection
+                                  ),
+                                ),
+                              );
+
+                              if (updatedCase != null) {
+                                setState(() {
+                                  selectedCases = updatedCase; // Update with the new selection
+                                });
+                              }
+                            },
+                          ),
+                        ],
+                      ),
+                    ),
+                  )
+                else
+                  Container(),
+              ],
+            ),
+
+
           ],
         ),
       ),
     );
   }
 }
+
+
+

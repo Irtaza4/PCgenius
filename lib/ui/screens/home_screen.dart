@@ -187,7 +187,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       child: isLoadingAIBuild
                           ? CircularProgressIndicator(color: Colors.greenAccent)
                           : Text(
-                        'AI PC BUILDER',
+                        'EASY BUILD',
                         style: TextStyle(
                           color: Colors.greenAccent,
                           fontWeight: FontWeight.w800,

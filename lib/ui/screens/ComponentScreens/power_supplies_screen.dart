@@ -7,7 +7,7 @@ import '../../../Utils/utils.dart';
 import '../login_screen.dart';
 
 class PowerSuppliesScreen extends StatefulWidget {
-  const PowerSuppliesScreen({super.key});
+  const PowerSuppliesScreen({super.key, Map<String, String>? selectedPowerSupply});
 
   @override
   State<PowerSuppliesScreen> createState() => _PowerSuppliesScreenState();
@@ -16,7 +16,7 @@ class PowerSuppliesScreen extends StatefulWidget {
 class _PowerSuppliesScreenState extends State<PowerSuppliesScreen> {
   final _auth = FirebaseAuth.instance;
   final ref = FirebaseDatabase.instance.ref('power_supplies'); // Reference to the 'power_supplies' node in Firebase
-
+  String? selectedPowerSupplyId;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -74,6 +74,7 @@ class _PowerSuppliesScreenState extends State<PowerSuppliesScreen> {
               ),
               itemBuilder: (context, snapshot, animation, index) {
                 // Fetching the power supply data from Firebase
+                String powerSupplyId = snapshot.key ?? '';
                 String imageUrl = snapshot.child('image_url').value.toString();
                 String name = snapshot.child('name').value.toString();
                 String modular = snapshot.child('modular').value.toString();
@@ -82,6 +83,8 @@ class _PowerSuppliesScreenState extends State<PowerSuppliesScreen> {
                 String color = snapshot.child('color').value.toString();
                 String certification = snapshot.child('certification').value.toString();
                 String wattage = snapshot.child('wattage').value.toString();
+
+                bool isSelected = powerSupplyId == selectedPowerSupplyId;
 
                 return Column(
                   children: [
@@ -146,18 +149,24 @@ class _PowerSuppliesScreenState extends State<PowerSuppliesScreen> {
                       ),
                       trailing: ElevatedButton(
                         onPressed: () {
-                          // Add your action for the 'Add' button here
-                          print("Added $name to the build");
+                          setState(() {
+                            selectedPowerSupplyId = powerSupplyId;
+                          });
+                          Navigator.pop(context, {
+                            'image_url': imageUrl,
+                            'name': name,
+                            'price_pkr': pricePkr,
+                          });
                         },
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.green,
+                          backgroundColor: isSelected ? Colors.black : Colors.green,
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(8),
                           ),
                         ),
                         child: Text(
-                          'Add',
-                          style: TextStyle(color: Colors.white),
+                          isSelected ? 'Added' : 'Add',
+                          style: TextStyle(color: isSelected ? Colors.green : Colors.white),
                         ),
                       ),
                     ),

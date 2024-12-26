@@ -7,7 +7,7 @@ import '../../../Utils/utils.dart';
 import '../login_screen.dart';
 
 class RAMScreen extends StatefulWidget {
-  const RAMScreen({super.key});
+  const RAMScreen({super.key, Map<String, String>? selectedRam});
 
   @override
   State<RAMScreen> createState() => _RAMScreenState();
@@ -16,6 +16,7 @@ class RAMScreen extends StatefulWidget {
 class _RAMScreenState extends State<RAMScreen> {
   final _auth = FirebaseAuth.instance;
   final ref = FirebaseDatabase.instance.ref('ram'); // Reference to the 'rams' node in Firebase
+  String selectedRAM = '';
 
   @override
   Widget build(BuildContext context) {
@@ -84,6 +85,8 @@ class _RAMScreenState extends State<RAMScreen> {
                 String typeSpeed = snapshot.child('type_speed').value.toString();
                 String price = snapshot.child('price').value.toString();
 
+                bool isSelected = selectedRAM == brandModel;
+
                 return Column(
                   children: [
                     ListTile(
@@ -138,7 +141,7 @@ class _RAMScreenState extends State<RAMScreen> {
                               ),
                               Flexible(
                                 child: Text(
-                                  '$price \RS',
+                                  '$price ',
                                   style: TextStyle(color: Colors.green),
                                   overflow: TextOverflow.ellipsis,
                                 ),
@@ -149,17 +152,24 @@ class _RAMScreenState extends State<RAMScreen> {
                       ),
                       trailing: ElevatedButton(
                         onPressed: () {
-                          print("Added $brandModel to the build");
+                          setState(() {
+                            selectedRAM = brandModel;
+                          });
+                          Navigator.pop(context, {
+                            'image_url': imageUrl,
+                            'brand_model': brandModel,
+                            'price': price,
+                          });
                         },
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.green,
+                          backgroundColor: isSelected ? Colors.black : Colors.green,
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(8),
                           ),
                         ),
-                        child: Text(
-                          'Add',
-                          style: TextStyle(color: Colors.white),
+                        child:  Text(
+                          isSelected ? 'Added' : 'Add',
+                          style: TextStyle(color: isSelected ? Colors.green : Colors.white),
                         ),
                       ),
                     ),

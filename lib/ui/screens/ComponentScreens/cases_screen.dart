@@ -7,7 +7,7 @@ import '../../../Utils/utils.dart';
 import '../login_screen.dart';
 
 class CasesScreen extends StatefulWidget {
-  const CasesScreen({super.key});
+  const CasesScreen({super.key, Map<String, String>? selectedCase});
 
   @override
   State<CasesScreen> createState() => _CasesScreenState();
@@ -15,12 +15,14 @@ class CasesScreen extends StatefulWidget {
 
 class _CasesScreenState extends State<CasesScreen> {
   final _auth = FirebaseAuth.instance;
-  final ref = FirebaseDatabase.instance.ref('cases'); // Reference to the 'cases' node in Firebase
-
+  final ref = FirebaseDatabase.instance
+      .ref('cases'); // Reference to the 'cases' node in Firebase
+  String? selectedCasesId;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.black, // Setting the scaffold background color to black
+      backgroundColor: Colors.black,
+      // Setting the scaffold background color to black
       appBar: AppBar(
         title: Text(
           'PC CASE VARIANTS',
@@ -68,34 +70,46 @@ class _CasesScreenState extends State<CasesScreen> {
               query: ref, // Firebase reference to fetch cases
               defaultChild: Center(
                 child: CircularProgressIndicator(
-                  valueColor: AlwaysStoppedAnimation<Color>(Colors.greenAccent), // Green accent color
+                  valueColor: AlwaysStoppedAnimation<Color>(Colors.greenAccent),
+                  // Green accent color
                   strokeWidth: 4.0, // Adjust thickness
                 ),
               ),
               itemBuilder: (context, snapshot, animation, index) {
                 // Fetching the case data from Firebase
+                String casesId = snapshot.key ?? '';
                 String imageUrl = snapshot.child('image_url').value.toString();
                 String name = snapshot.child('name').value.toString();
-                String internalBays = snapshot.child('internal_bays').value.toString();
-                String sidePanel = snapshot.child('side_panel').value.toString();
+                String internalBays =
+                    snapshot.child('internal_bays').value.toString();
+                String sidePanel =
+                    snapshot.child('side_panel').value.toString();
                 String type = snapshot.child('type').value.toString();
                 String volume = snapshot.child('volume').value.toString();
                 String pricePkr = snapshot.child('price_pkr').value.toString();
-                String color = snapshot.child('color').value.toString(); // Fetch color
+                String color =
+                    snapshot.child('color').value.toString(); // Fetch color
+
+                bool isSelected = casesId == selectedCasesId;
 
                 return Column(
                   children: [
                     ListTile(
-                      contentPadding: EdgeInsets.symmetric(vertical: 10, horizontal: 8),
+                      contentPadding:
+                          EdgeInsets.symmetric(vertical: 10, horizontal: 8),
                       leading: Container(
                         width: 60,
                         height: 90,
                         decoration: BoxDecoration(
-                          border: Border.all(color: Colors.greenAccent, width: 2), // Green border
-                          borderRadius: BorderRadius.circular(8), // Rounded corners
+                          border:
+                              Border.all(color: Colors.greenAccent, width: 2),
+                          // Green border
+                          borderRadius: BorderRadius.circular(8),
+                          // Rounded corners
                           boxShadow: [
                             BoxShadow(
-                              color: Colors.greenAccent.withOpacity(0.5), // Green accent shadow
+                              color: Colors.greenAccent.withOpacity(0.5),
+                              // Green accent shadow
                               blurRadius: 2,
                               offset: Offset(2, 4), // Shadow offset
                             ),
@@ -129,13 +143,16 @@ class _CasesScreenState extends State<CasesScreen> {
                             children: [
                               Text(
                                 'Price (PKR): ',
-                                style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold),
                               ),
                               Flexible(
                                 child: Text(
                                   '$pricePkr',
                                   style: TextStyle(color: Colors.green),
-                                  overflow: TextOverflow.ellipsis, // Prevents overflow
+                                  overflow: TextOverflow
+                                      .ellipsis, // Prevents overflow
                                 ),
                               ),
                             ],
@@ -146,22 +163,29 @@ class _CasesScreenState extends State<CasesScreen> {
                       ),
                       trailing: ElevatedButton(
                         onPressed: () {
-                          // Add your action for the 'Add' button here
-                          print("Added $name to the build");
+                          setState(() {
+                            selectedCasesId = casesId;
+                          });
+                          Navigator.pop(context, {
+                            'image_url': imageUrl,
+                            'name': name,
+                            'price_pkr': pricePkr,
+                          });
                         },
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.green,
+                          backgroundColor: isSelected ? Colors.black : Colors.green,
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(8),
                           ),
                         ),
                         child: Text(
-                          'Add',
-                          style: TextStyle(color: Colors.white),
+                          isSelected ? 'Added' : 'Add',
+                          style: TextStyle(color: isSelected ? Colors.green : Colors.white),
                         ),
                       ),
                     ),
-                    Divider(color: Colors.grey, thickness: 1), // Grey line between variants
+                    Divider(color: Colors.grey, thickness: 1),
+                    // Grey line between variants
                   ],
                 );
               },

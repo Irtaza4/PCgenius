@@ -7,7 +7,7 @@ import '../../../Utils/utils.dart';
 import '../login_screen.dart';
 
 class MotherboardsScreen extends StatefulWidget {
-  const MotherboardsScreen({super.key});
+  const MotherboardsScreen({super.key, Map<String, String>? selectedMotherBoard});
 
   @override
   State<MotherboardsScreen> createState() => _MotherboardsScreenState();
@@ -16,7 +16,7 @@ class MotherboardsScreen extends StatefulWidget {
 class _MotherboardsScreenState extends State<MotherboardsScreen> {
   final _auth = FirebaseAuth.instance;
   final ref = FirebaseDatabase.instance.ref('motherboards'); // Reference to the 'motherboards' node in Firebase
-
+  String? selectedMotherboardId;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -73,6 +73,7 @@ class _MotherboardsScreenState extends State<MotherboardsScreen> {
               ),
               itemBuilder: (context, snapshot, animation, index) {
                 // Fetching the motherboard data from Firebase
+                String motherboardId = snapshot.key ?? '';
                 String imageUrl = snapshot.child('image').value.toString();
                 String name = snapshot.child('name').value.toString();
                 String slots = snapshot.child('slots').value.toString();
@@ -81,6 +82,8 @@ class _MotherboardsScreenState extends State<MotherboardsScreen> {
                 String maxMemory = snapshot.child('maxMemory').value.toString();
                 String formFactor = snapshot.child('formFactor').value.toString();
                 String color = snapshot.child('color').value.toString();
+
+                bool isSelected = motherboardId == selectedMotherboardId;
 
                 return Column(
                   children: [
@@ -145,18 +148,24 @@ class _MotherboardsScreenState extends State<MotherboardsScreen> {
                       ),
                       trailing: ElevatedButton(
                         onPressed: () {
-                          // Add your action for the 'Add' button here
-                          print("Added $name to the build");
+                          setState(() {
+                            selectedMotherboardId = motherboardId;
+                          });
+                          Navigator.pop(context, {
+                            'image': imageUrl,
+                            'name': name,
+                            'price': price,
+                          });
                         },
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.green,
+                          backgroundColor: isSelected ? Colors.black : Colors.green,
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(8),
                           ),
                         ),
                         child: Text(
-                          'Add',
-                          style: TextStyle(color: Colors.white),
+                          isSelected ? 'Added' : 'Add',
+                          style: TextStyle(color: isSelected ? Colors.green : Colors.white),
                         ),
                       ),
                     ),
