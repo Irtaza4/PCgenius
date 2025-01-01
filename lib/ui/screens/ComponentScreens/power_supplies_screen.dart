@@ -7,7 +7,7 @@ import '../../../Utils/utils.dart';
 import '../login_screen.dart';
 
 class PowerSuppliesScreen extends StatefulWidget {
-  const PowerSuppliesScreen({super.key, Map<String, String>? selectedPowerSupply});
+  const PowerSuppliesScreen({super.key, Map<String, dynamic>? selectedPowerSupply});
 
   @override
   State<PowerSuppliesScreen> createState() => _PowerSuppliesScreenState();

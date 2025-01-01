@@ -6,6 +6,7 @@ import 'package:pc_genius/ui/screens/ComponentScreens/motherboards_screen.dart';
 import 'package:pc_genius/ui/screens/ComponentScreens/power_supplies_screen.dart';
 import 'package:pc_genius/ui/screens/ComponentScreens/processors_screen.dart';
 import 'package:pc_genius/ui/screens/ComponentScreens/rams_screen.dart';
+import 'package:pc_genius/ui/screens/custom_build_result_screen.dart';
 import 'package:pc_genius/ui/screens/login_screen.dart';
 import '../../Utils/utils.dart';
 import '../../Widgets/Custom_button.dart';
@@ -26,15 +27,19 @@ class _CustomBuildState extends State<CustomBuild> {
   bool isLoadingPowerSupply = false;
   bool isLoadingCases = false;
 
-  Map<String, String>? selectedProcessor;
-  Map<String, String>? selectedRam;
-  Map<String, String>? selectedGpus;
-  Map<String, String>? selectedPowerSupplies;
-  Map<String, String>? selectedMotherBoards;
-  Map<String, String>? selectedCases;
+  Map<String, dynamic>? selectedProcessor;
+  Map<String, dynamic>? selectedRam;
+  Map<String, dynamic>? selectedGpus;
+  Map<String, dynamic>? selectedPowerSupplies;
+  Map<String, dynamic>? selectedMotherBoards;
+  Map<String, dynamic>? selectedCases;
 
   @override
   Widget build(BuildContext context) {
+    bool allComponentsSelected =selectedProcessor!=null && selectedRam!=null &&
+        selectedGpus!=null && selectedPowerSupplies!=null && selectedMotherBoards!=null
+    && selectedCases!=null;
+
     return Scaffold(
       backgroundColor: Colors.black,
       appBar: AppBar(
@@ -302,7 +307,7 @@ class _CustomBuildState extends State<CustomBuild> {
               ],
             ),
             SizedBox(height: 20),
-            //update&delete
+
             Column(
               children: [
                 // Processor Card
@@ -337,7 +342,7 @@ class _CustomBuildState extends State<CustomBuild> {
                         ),
                       ),
                       subtitle: Text(
-                        ' ${selectedProcessor!['price']} PKR',
+                        ' ${selectedProcessor!['price']} RS',
                         style: TextStyle(color: Colors.green, fontSize: 14),
                       ),
                       trailing: Row(
@@ -411,7 +416,7 @@ class _CustomBuildState extends State<CustomBuild> {
                         ),
                       ),
                       subtitle: Text(
-                        ' ${selectedRam!['price']} ',
+                        ' ${selectedRam!['price']} RS ',
                         style: TextStyle(color: Colors.green, fontSize: 14),
                       ),
                       trailing: Row(
@@ -485,7 +490,7 @@ class _CustomBuildState extends State<CustomBuild> {
                         ),
                       ),
                       subtitle: Text(
-                        ' ${selectedMotherBoards!['price']} ',
+                        ' ${selectedMotherBoards!['price']} RS',
                         style: TextStyle(color: Colors.green, fontSize: 14),
                       ),
                       trailing: Row(
@@ -559,7 +564,7 @@ class _CustomBuildState extends State<CustomBuild> {
                         ),
                       ),
                       subtitle: Text(
-                        ' ${selectedGpus!['price']} ',
+                        ' ${selectedGpus!['price']} RS',
                         style: TextStyle(color: Colors.green, fontSize: 14),
                       ),
                       trailing: Row(
@@ -633,7 +638,7 @@ class _CustomBuildState extends State<CustomBuild> {
                         ),
                       ),
                       subtitle: Text(
-                        ' ${selectedPowerSupplies!['price_pkr']} PKR',
+                        ' ${selectedPowerSupplies!['price_pkr']} RS',
                         style: TextStyle(color: Colors.green, fontSize: 14),
                       ),
                       trailing: Row(
@@ -707,7 +712,7 @@ class _CustomBuildState extends State<CustomBuild> {
                         ),
                       ),
                       subtitle: Text(
-                        ' ${selectedCases!['price_pkr']} PKR',
+                        ' ${selectedCases!['price_pkr']} RS',
                         style: TextStyle(color: Colors.green, fontSize: 14),
                       ),
                       trailing: Row(
@@ -746,13 +751,37 @@ class _CustomBuildState extends State<CustomBuild> {
                   )
                 else
                   Container(),
+
               ],
             ),
-
 
           ],
         ),
       ),
+      floatingActionButton: allComponentsSelected
+          ? FloatingActionButton.extended(
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => CustomBuildResultScreen(
+                components: {
+                  'Processor': selectedProcessor,
+                  'RAM': selectedRam,
+                  'Motherboard': selectedMotherBoards,
+                  'GPU': selectedGpus,
+                  'Power Supply': selectedPowerSupplies,
+                  'Case': selectedCases,
+                },
+              ),
+            ),
+          );
+        },
+        label: Text('Show Build',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 17),),
+        icon: Icon(Icons.check_circle),
+        backgroundColor: Colors.green,
+      )
+          : null,
     );
   }
 }

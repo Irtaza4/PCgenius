@@ -7,7 +7,7 @@ import '../../../Utils/utils.dart';
 import '../login_screen.dart';
 
 class GPUScreen extends StatefulWidget {
-  const GPUScreen({super.key, Map<String, String>? selectedGpu});
+  const GPUScreen({super.key, Map<String, dynamic>? selectedGpu});
 
   @override
   State<GPUScreen> createState() => _GPUScreenState();

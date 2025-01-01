@@ -16,22 +16,16 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  final FirebaseHelperProcessors firebaseHelper = FirebaseHelperProcessors();
-  final FirebaseHelperMotherboards firebaseHelperMotherboards =
-      FirebaseHelperMotherboards();
-  final FirebaseHelperRAM firebaseHelperRAM = FirebaseHelperRAM();
-  final FirebaseHelperGPU firebaseHelperGPU = FirebaseHelperGPU();
-  final FirebaseHelperPowerSupply firebaseHelperPowerSupply =
-      FirebaseHelperPowerSupply();
-  final FirebaseHelperCase firebaseHelperCase = FirebaseHelperCase();
+  // final FirebaseHelperProcessors firebaseHelper = FirebaseHelperProcessors();
+  // final FirebaseHelperMotherboards firebaseHelperMotherboards =
+  //     FirebaseHelperMotherboards();
+  // final FirebaseHelperRAM firebaseHelperRAM = FirebaseHelperRAM();
+  // final FirebaseHelperGPU firebaseHelperGPU = FirebaseHelperGPU();
+  // final FirebaseHelperPowerSupply firebaseHelperPowerSupply =
+  //     FirebaseHelperPowerSupply();
+  // final FirebaseHelperCase firebaseHelperCase = FirebaseHelperCase();
 
-  // Add processor data manually when app starts
-  // firebaseHelperCase.addCaseDataManually();
-  // firebaseHelperPowerSupply.addPowerSupplyDataManually();
-  // firebaseHelperGPU.addGPUDataManually();
-  // firebaseHelperRAM.addRAMDataManually();
-  //firebaseHelper.addProcessorDataManually();
-  //firebaseHelperMotherboards.addMotherboardDataManually();
+
   runApp(const MyApp());
 }
 

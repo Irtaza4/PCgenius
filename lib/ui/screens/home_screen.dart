@@ -105,7 +105,9 @@ class _HomeScreenState extends State<HomeScreen> {
                     setState(() {
                       isLoadingCustomBuild = true;
                     });
-                    await Future.delayed(Duration(seconds: 1)); // Simulate loading
+                    await Future.delayed(Duration(seconds: 1)).then((value){
+                      Utilas().toastMessage('Add all Components!');
+                    });// Simulate loading
                     setState(() {
                       isLoadingCustomBuild = false;
                     });

@@ -101,7 +101,7 @@ class BuildResultsScreen extends StatelessWidget {
                   'assets/images/112.png',
                   width: 250,
                   height: 200,
-                  fit: BoxFit.cover,
+
                 ),
               ),
               SizedBox(height: 50),

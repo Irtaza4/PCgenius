@@ -7,7 +7,7 @@ import '../../../Utils/utils.dart';
 import '../login_screen.dart';
 
 class CasesScreen extends StatefulWidget {
-  const CasesScreen({super.key, Map<String, String>? selectedCase});
+  const CasesScreen({super.key, Map<String, dynamic>? selectedCase});
 
   @override
   State<CasesScreen> createState() => _CasesScreenState();

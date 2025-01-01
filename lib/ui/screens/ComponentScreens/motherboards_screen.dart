@@ -7,7 +7,7 @@ import '../../../Utils/utils.dart';
 import '../login_screen.dart';
 
 class MotherboardsScreen extends StatefulWidget {
-  const MotherboardsScreen({super.key, Map<String, String>? selectedMotherBoard});
+  const MotherboardsScreen({super.key, Map<String, dynamic>? selectedMotherBoard});
 
   @override
   State<MotherboardsScreen> createState() => _MotherboardsScreenState();

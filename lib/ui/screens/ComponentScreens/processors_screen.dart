@@ -7,7 +7,7 @@ import '../../../Utils/utils.dart';
 import '../login_screen.dart';
 
 class ProcessorsScreen extends StatefulWidget {
-  const ProcessorsScreen({super.key, Map<String, String>? selectedProcessor});
+  const ProcessorsScreen({super.key, Map<String, dynamic>? selectedProcessor});
 
   @override
   State<ProcessorsScreen> createState() => _ProcessorsScreenState();

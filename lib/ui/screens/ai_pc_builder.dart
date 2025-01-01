@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:pc_genius/ui/screens/build_result_screen.dart';
 import 'package:pc_genius/ui/screens/login_screen.dart';
 import '../../Utils/utils.dart'; // Your custom round button widget
-//import 'build_results_screen.dart'; // Import the BuildResultsScreen
 
 class AiPcBuilder extends StatefulWidget {
   const AiPcBuilder({super.key});
@@ -14,14 +13,20 @@ class AiPcBuilder extends StatefulWidget {
 
 class _AiPcBuilderState extends State<AiPcBuilder> {
   final _auth = FirebaseAuth.instance;
-  String? selectedBudget;
-  String selectedPcType = 'Gaming';
+  String? selectedBudget = null; // Initially set to null for placeholder
+  String? selectedPcType = null; // Initially set to null for placeholder
   String? errorMessage;
 
+  @override
+  void initState() {
+    super.initState();
+    // Ensure that initial values are null for both fields
+  }
+
   void handleShowBuild() {
-    if (selectedBudget == null || int.parse(selectedBudget!) < 50000 || int.parse(selectedBudget!) > 500000) {
+    if (selectedBudget == null || selectedPcType == null) {
       setState(() {
-        errorMessage = 'Please enter a valid budget (50,000 - 500,000).';
+        errorMessage = 'Please select both budget and PC type.';
       });
       return;
     }
@@ -32,7 +37,7 @@ class _AiPcBuilderState extends State<AiPcBuilder> {
       MaterialPageRoute(
         builder: (context) => BuildResultsScreen(
           budget: selectedBudget!,
-          pcType: selectedPcType,
+          pcType: selectedPcType!,
         ),
       ),
     );
@@ -45,9 +50,7 @@ class _AiPcBuilderState extends State<AiPcBuilder> {
       appBar: AppBar(
         title: Text(
           'AI PC BUILDER',
-          style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white,
-
-          ),
+          style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
         ),
         actions: [
           IconButton(
@@ -120,7 +123,11 @@ class _AiPcBuilderState extends State<AiPcBuilder> {
                   ),
                   const SizedBox(height: 10),
                   DropdownButtonFormField<String>(
-                    value: selectedBudget,
+                    value: selectedBudget, // Default value set to null
+                    hint: Text(
+                      'Select Your Budget',
+                      style: TextStyle(color: Colors.white.withOpacity(0.5)),
+                    ),
                     decoration: InputDecoration(
                       filled: true,
                       fillColor: const Color(0xFF2F4F2F),
@@ -145,7 +152,7 @@ class _AiPcBuilderState extends State<AiPcBuilder> {
                     ],
                     onChanged: (value) {
                       setState(() {
-                        selectedBudget = value!;
+                        selectedBudget = value;
                         errorMessage = null;
                       });
                     },
@@ -178,7 +185,11 @@ class _AiPcBuilderState extends State<AiPcBuilder> {
                   ),
                   const SizedBox(height: 10),
                   DropdownButtonFormField<String>(
-                    value: selectedPcType,
+                    value: selectedPcType, // Default value set to null
+                    hint: Text(
+                      'Select Your PC Type',
+                      style: TextStyle(color: Colors.white.withOpacity(0.5)),
+                    ),
                     decoration: InputDecoration(
                       filled: true,
                       fillColor: const Color(0xFF2F4F2F),
@@ -196,7 +207,7 @@ class _AiPcBuilderState extends State<AiPcBuilder> {
                     ],
                     onChanged: (value) {
                       setState(() {
-                        selectedPcType = value!;
+                        selectedPcType = value;
                       });
                     },
                   ),
@@ -208,13 +219,13 @@ class _AiPcBuilderState extends State<AiPcBuilder> {
               ElevatedButton(
                 onPressed: handleShowBuild,
                 style: ElevatedButton.styleFrom(
-               backgroundColor: Colors.green.withOpacity(0.8),
+                  backgroundColor: Colors.green.withOpacity(0.8),
                   padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 30),
                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(40)),
                 ),
                 child: const Text(
                   "Show Me My Build",
-                  style: TextStyle(fontSize: 16, color: Colors.white,fontWeight: FontWeight.bold),
+                  style: TextStyle(fontSize: 16, color: Colors.white, fontWeight: FontWeight.bold),
                 ),
               ),
             ],

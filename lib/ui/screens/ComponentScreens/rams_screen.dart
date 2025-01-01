@@ -7,7 +7,7 @@ import '../../../Utils/utils.dart';
 import '../login_screen.dart';
 
 class RAMScreen extends StatefulWidget {
-  const RAMScreen({super.key, Map<String, String>? selectedRam});
+  const RAMScreen({super.key, Map<String, dynamic>? selectedRam});
 
   @override
   State<RAMScreen> createState() => _RAMScreenState();
