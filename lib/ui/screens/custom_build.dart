@@ -310,7 +310,7 @@ class _CustomBuildState extends State<CustomBuild> {
                 padding: const EdgeInsets.symmetric(horizontal:115),
                 child: CustomButton(
                   label: "STORAGE",
-                  icon: Icons.computer_outlined,
+                  icon: Icons.storage_outlined,
                   onTap: () async {
                     setState(() {
                       isLoadingSsds = true;
