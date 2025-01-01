@@ -6,6 +6,7 @@ import 'package:pc_genius/ui/screens/ComponentScreens/motherboards_screen.dart';
 import 'package:pc_genius/ui/screens/ComponentScreens/power_supplies_screen.dart';
 import 'package:pc_genius/ui/screens/ComponentScreens/processors_screen.dart';
 import 'package:pc_genius/ui/screens/ComponentScreens/rams_screen.dart';
+import 'package:pc_genius/ui/screens/ComponentScreens/ssd_screen.dart';
 import 'package:pc_genius/ui/screens/custom_build_result_screen.dart';
 import 'package:pc_genius/ui/screens/login_screen.dart';
 import '../../Utils/utils.dart';
@@ -26,6 +27,7 @@ class _CustomBuildState extends State<CustomBuild> {
   bool isLoadingGPU = false;
   bool isLoadingPowerSupply = false;
   bool isLoadingCases = false;
+  bool isLoadingSsds =false;
 
   Map<String, dynamic>? selectedProcessor;
   Map<String, dynamic>? selectedRam;
@@ -33,12 +35,13 @@ class _CustomBuildState extends State<CustomBuild> {
   Map<String, dynamic>? selectedPowerSupplies;
   Map<String, dynamic>? selectedMotherBoards;
   Map<String, dynamic>? selectedCases;
+  Map<String, dynamic>? selectedSsds;
 
   @override
   Widget build(BuildContext context) {
     bool allComponentsSelected =selectedProcessor!=null && selectedRam!=null &&
         selectedGpus!=null && selectedPowerSupplies!=null && selectedMotherBoards!=null
-    && selectedCases!=null;
+    && selectedCases!=null && selectedSsds!=null;
 
     return Scaffold(
       backgroundColor: Colors.black,
@@ -106,8 +109,7 @@ class _CustomBuildState extends State<CustomBuild> {
               children: [
                 Flexible(
                   child: Padding(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 27, vertical: 20),
+                    padding: const EdgeInsets.symmetric(horizontal: 27, vertical: 20),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
@@ -121,8 +123,7 @@ class _CustomBuildState extends State<CustomBuild> {
 
                             final selectedProcessorData = await Navigator.push(
                               context,
-                              MaterialPageRoute(
-                                  builder: (context) => ProcessorsScreen()),
+                              MaterialPageRoute(builder: (context) => ProcessorsScreen()),
                             );
 
                             setState(() {
@@ -151,8 +152,7 @@ class _CustomBuildState extends State<CustomBuild> {
 
                             final selectedRamData = await Navigator.push(
                               context,
-                              MaterialPageRoute(
-                                  builder: (context) => RAMScreen()),
+                              MaterialPageRoute(builder: (context) => RAMScreen()),
                             );
 
                             setState(() {
@@ -220,8 +220,7 @@ class _CustomBuildState extends State<CustomBuild> {
 
                             final selectedGpuData = await Navigator.push(
                               context,
-                              MaterialPageRoute(
-                                  builder: (context) => GPUScreen()),
+                              MaterialPageRoute(builder: (context) => GPUScreen()),
                             );
 
                             setState(() {
@@ -248,8 +247,7 @@ class _CustomBuildState extends State<CustomBuild> {
                               isLoadingPowerSupply = true;
                             });
 
-                            final selectedPowerSupplyData =
-                            await Navigator.push(
+                            final selectedPowerSupplyData = await Navigator.push(
                               context,
                               MaterialPageRoute(
                                   builder: (context) => PowerSuppliesScreen()),
@@ -281,8 +279,7 @@ class _CustomBuildState extends State<CustomBuild> {
 
                             final selectedCasesData = await Navigator.push(
                               context,
-                              MaterialPageRoute(
-                                  builder: (context) => CasesScreen()),
+                              MaterialPageRoute(builder: (context) => CasesScreen()),
                             );
 
                             setState(() {
@@ -306,6 +303,38 @@ class _CustomBuildState extends State<CustomBuild> {
                 ),
               ],
             ),
+
+// The STORAGE button centered below the row
+            Center(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal:115),
+                child: CustomButton(
+                  label: "STORAGE",
+                  icon: Icons.computer_outlined,
+                  onTap: () async {
+                    setState(() {
+                      isLoadingSsds = true;
+                    });
+
+                    final selectedSsdData = await Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => SsdScreen()),
+                    );
+
+                    setState(() {
+                      isLoadingSsds = false;
+                      if (selectedSsdData != null) {
+                        selectedSsds = selectedSsdData;
+                      }
+                    });
+                  },
+                  isLoading: isLoadingSsds,
+                  backgroundColor: selectedSsds != null ? Colors.green : Colors.black,
+                  textColor: selectedSsds != null ? Colors.black : Colors.white,
+                ),
+              ),
+            ),
+
             SizedBox(height: 20),
 
             Column(
@@ -752,6 +781,80 @@ class _CustomBuildState extends State<CustomBuild> {
                 else
                   Container(),
 
+                Divider(color: Colors.transparent),
+
+                // Case Card
+                if (selectedSsds != null)
+                  Card(
+                    margin: EdgeInsets.symmetric(vertical: 4),
+                    elevation: 5,
+                    color: Colors.black,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                      side: BorderSide(
+                        color: selectedSsds != null ? Colors.greenAccent : Colors.black,
+                        width: 2,
+                      ),
+                    ),
+                    child: ListTile(
+                      contentPadding: EdgeInsets.symmetric(vertical: 8, horizontal: 12),
+                      leading: Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(8),
+                          border: Border.all(color: Colors.transparent, width: 0),
+                        ),
+                        child: Image.network(selectedSsds!['image']!, width: 40, height: 40),
+                      ),
+                      title: Text(
+                        selectedSsds!['name']!,
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      ),
+                      subtitle: Text(
+                        ' ${selectedSsds!['price']} RS',
+                        style: TextStyle(color: Colors.green, fontSize: 14),
+                      ),
+                      trailing: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          IconButton(
+                            icon: Icon(Icons.delete, color: Colors.red),
+                            onPressed: () {
+                              setState(() {
+                                selectedSsds = null;
+                              });
+                            },
+                          ),
+                          IconButton(
+                            icon: Icon(Icons.update, color: Colors.greenAccent), // Change color here
+                            onPressed: () async {
+                              final updatedSsds = await Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => SsdScreen(
+                                    selectedSsd: selectedSsds, // Pass current selection
+                                  ),
+                                ),
+                              );
+
+                              if (updatedSsds != null) {
+                                setState(() {
+                                  selectedSsds = updatedSsds; // Update with the new selection
+                                });
+                              }
+                            },
+                          ),
+                        ],
+                      ),
+                    ),
+                  )
+                else
+                  Container(),
+
               ],
             ),
 
@@ -772,6 +875,7 @@ class _CustomBuildState extends State<CustomBuild> {
                   'GPU': selectedGpus,
                   'Power Supply': selectedPowerSupplies,
                   'Case': selectedCases,
+                  'SSD' : selectedSsds,
                 },
               ),
             ),
