@@ -5,27 +5,22 @@ import 'package:pc_genius/ui/screens/login_screen.dart';
 import 'dart:async';
 
 class SplashScreenServices {
-  void isLogin(BuildContext context, AnimationController controller) {
+  void isLogin(BuildContext context) {
     final _auth = FirebaseAuth.instance;
-    final user =_auth.currentUser;
-    controller.forward();
+    final user = _auth.currentUser;
 
-    if(user!=null){
-      Timer(Duration(seconds: 3), () {
+    Timer(Duration(seconds: 3), () {
+      if (user != null) {
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(builder: (context) => HomeScreen()),
         );
-      });
-    }
-    else{
-      Timer(Duration(seconds: 3), () {
+      } else {
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(builder: (context) => LoginScreen()),
         );
-      });
-    }
-
+      }
+    });
   }
 }
