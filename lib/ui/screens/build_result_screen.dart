@@ -46,9 +46,9 @@ class BuildResultsScreen extends StatelessWidget {
               Text(
                 'Your Preferred $pcType PC',
                 style: TextStyle(
-                  fontSize: 30,
+                  fontSize: 20,
                   color: Colors.greenAccent,
-                  fontWeight: FontWeight.w500,
+                  fontWeight: FontWeight.w800,
                   letterSpacing: 3,
                   wordSpacing: 2,
                   shadows: [
@@ -64,7 +64,7 @@ class BuildResultsScreen extends StatelessWidget {
               Text(
                 'With Budget of $budget',
                 style: TextStyle(
-                  fontSize: 20,
+                  fontSize: 15,
                   color: Colors.white,
                   fontWeight: FontWeight.w500,
                   letterSpacing: 2,
@@ -77,10 +77,10 @@ class BuildResultsScreen extends StatelessWidget {
                   ],
                 ),
               ),
-              SizedBox(height: 30),
+              SizedBox(height: 25),
               Container(
-                width: 250,
-                height: 200,
+                width: 200,
+                height: 150,
                 decoration: BoxDecoration(
                   color: Colors.black,
                   borderRadius: BorderRadius.circular(10),
@@ -88,14 +88,7 @@ class BuildResultsScreen extends StatelessWidget {
                     color: Colors.black,
                     width: 3,
                   ),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.green.withOpacity(0.5),
-                      spreadRadius: 5,
-                      blurRadius: 10,
-                      offset: Offset(0, 4),
-                    ),
-                  ],
+
                 ),
                 child: Image.asset(
                   'assets/images/112.png',
@@ -104,7 +97,7 @@ class BuildResultsScreen extends StatelessWidget {
 
                 ),
               ),
-              SizedBox(height: 50),
+              SizedBox(height: 5),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -113,16 +106,16 @@ class BuildResultsScreen extends StatelessWidget {
                     child: Column(
                       children: [
                         _buildIcon(Icons.computer_outlined, 'Processor'),
-                        Text(buildData['Processor']!, style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
+                        Text(buildData['Processor']!, style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold,fontSize: 12)),
                         SizedBox(height: 20),
                         _buildIcon(Icons.memory, 'RAM'),
-                        Text(buildData['RAM']!, style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
+                        Text(buildData['RAM']!, style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold,fontSize: 12)),
                         SizedBox(height: 20),
                         _buildIcon(Icons.storage, 'HDD'),
-                        Text(buildData['HDD']!, style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
+                        Text(buildData['HDD']!, style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold,fontSize: 12)),
                         SizedBox(height: 20),
                         _buildIcon(Icons.power, 'Power Supply'),
-                        Text(buildData['PowerSupply']!, style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
+                        Text(buildData['PowerSupply']!, style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold,fontSize: 12)),
                         SizedBox(height: 20),
                       ],
                     ),
@@ -132,16 +125,16 @@ class BuildResultsScreen extends StatelessWidget {
                     child: Column(
                       children: [
                         _buildIcon(Icons.video_label, 'Graphics Card (GPU)'),
-                        Text(buildData['GPU']!, style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
+                        Text(buildData['GPU']!, style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold,fontSize: 12)),
                         SizedBox(height: 20),
                         _buildIcon(Icons.storage, 'SSD'),
-                        Text(buildData['SSD']!, style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
+                        Text(buildData['SSD']!, style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold,fontSize: 12)),
                         SizedBox(height: 20),
                         _buildIcon(Icons.developer_board_sharp, 'Motherboard'),
-                        Text(buildData['Motherboard']!, style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
+                        Text(buildData['Motherboard']!, style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold,fontSize: 12)),
                         SizedBox(height: 20),
                         _buildIcon(Icons.tv, 'Case'),
-                        Text(buildData['Case']!, style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
+                        Text(buildData['Case']!, style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold,fontSize: 12)),
                         SizedBox(height: 20),
                       ],
                     ),

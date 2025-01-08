@@ -80,23 +80,29 @@ class _AiPcBuilderState extends State<AiPcBuilder> {
         ),
       ),
       body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 70.0, vertical: 20.0),
+        padding: const EdgeInsets.symmetric(horizontal: 40,vertical: 20),
         child: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Image.asset(
-                'assets/images/1.jpeg',
-                width: 350,
-                height: 300,
+              Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Container(
+                  child: Image.asset(
+                    'assets/images/1.jpeg',
+                    width: 250,
+                    height: 150,
+                  ),
+                ),
               ),
+                const SizedBox(height: 20,),
               Center(
                 child: Text(
                   'Crafting Your Digital Dreams, One Byte at a Time',
                   style: TextStyle(
                     color: Colors.greenAccent,
-                    fontSize: 30,
-                    fontWeight: FontWeight.w500,
+                    fontSize: 25,
+                    fontWeight: FontWeight.w800,
                     letterSpacing: 2,
                     shadows: [
                       Shadow(
@@ -195,7 +201,8 @@ class _AiPcBuilderState extends State<AiPcBuilder> {
                       fillColor: const Color(0xFF2F4F2F),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(35),
-                        borderSide: const BorderSide(color: Color(0xFF88C388)),
+                        borderSide: const BorderSide(color: Color(0xFF88C388),
+                        ),
                       ),
                     ),
                     dropdownColor: const Color(0xFF2F4F2F),
@@ -219,15 +226,30 @@ class _AiPcBuilderState extends State<AiPcBuilder> {
               ElevatedButton(
                 onPressed: handleShowBuild,
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.green.withOpacity(0.8),
+                  backgroundColor: Colors.greenAccent,
                   padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 30),
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(40)),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(40),
+                  ),
+                  elevation: 10, // This adds shadow to the button itself
                 ),
-                child: const Text(
-                  "Show Me My Build",
-                  style: TextStyle(fontSize: 16, color: Colors.white, fontWeight: FontWeight.bold),
+                child: Text(
+                  "Show My Build",
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.w800,
+                    fontSize: 20,
+                    shadows: [
+                      Shadow(
+                        color: Colors.black.withOpacity(0.6), // Green accent shadow
+                        offset: Offset(2.0, 2.0),
+                        blurRadius: 5.0,
+                      ),
+                    ],
+                  ),
                 ),
               ),
+
             ],
           ),
         ),

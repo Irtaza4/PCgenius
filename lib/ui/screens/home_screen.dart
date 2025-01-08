@@ -59,40 +59,48 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ),
       ),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 70.0, vertical: 20.0),
-        child: SingleChildScrollView(
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 25,vertical: 15),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Image.asset(
-                'assets/images/23.png',
-                width: 350,
-                height: 300,
+              Container(
+                child: Image.asset(
+                  'assets/images/23.png',
+                  width: 300,
+                  height: 250,
+                ),
               ),
               Center(
-                child: Text(
-                  'BUILD YOUR DREAM PC',
-                  style: TextStyle(
-                    color: Colors.greenAccent,
-                    fontSize: 30,
-                    fontWeight: FontWeight.w500,
-                    letterSpacing: 2,
-                    shadows: [
-                      Shadow(
-                        color: Colors.green.withOpacity(0.5),
-                        offset: Offset(3.0, 3.0),
-                        blurRadius: 5.0,
-                      ),
-                    ],
+                child: Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 50),
+                  child: Text(
+                    'BUILD YOUR DREAM PC',
+                    style: TextStyle(
+                      color: Colors.greenAccent,
+                      fontSize: 30,
+                      fontWeight: FontWeight.w800,
+                      letterSpacing: 2,
+                      shadows: [
+                        Shadow(
+                          color: Colors.green.withOpacity(0.5),
+                          offset: Offset(3.0, 3.0),
+                          blurRadius: 5.0,
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
               Center(
-                child: Text(
-                  'Custom build the perfect setup or let our AI assistant guide you.',
-                  style: TextStyle(color: Colors.white, fontSize: 15),
+                child: Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 30),
+                  child:const Text(
+                    'Custom build the perfect setup or let our AI assistant guide you.',
+                    style: TextStyle(color: Colors.white, fontSize: 15,fontWeight: FontWeight.w400),
+                  ),
                 ),
               ),
               SizedBox(height: 40),
