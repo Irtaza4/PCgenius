@@ -866,8 +866,8 @@ class _CustomBuildState extends State<CustomBuild> {
         onPressed: () {
           Navigator.push(
             context,
-            MaterialPageRoute(
-              builder: (context) => CustomBuildResultScreen(
+            PageRouteBuilder(
+              pageBuilder: (context, animation, secondaryAnimation) => CustomBuildResultScreen(
                 components: {
                   'Processor': selectedProcessor,
                   'RAM': selectedRam,
@@ -875,17 +875,34 @@ class _CustomBuildState extends State<CustomBuild> {
                   'GPU': selectedGpus,
                   'Power Supply': selectedPowerSupplies,
                   'Case': selectedCases,
-                  'SSD' : selectedSsds,
+                  'SSD': selectedSsds,
                 },
               ),
+              transitionsBuilder: (context, animation, secondaryAnimation, child) {
+                const begin = Offset(1.0, 0.0); // Start from the right side
+                const end = Offset.zero;        // End at the center
+                const curve = Curves.easeInOut;
+
+                var tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+                var offsetAnimation = animation.drive(tween);
+
+                return SlideTransition(
+                  position: offsetAnimation,
+                  child: child,
+                );
+              },
             ),
           );
         },
-        label: Text('Show Build',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 17),),
+        label: Text(
+          'Show Build',
+          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 17),
+        ),
         icon: Icon(Icons.check_circle),
         backgroundColor: Colors.green,
       )
           : null,
+
     );
   }
 }

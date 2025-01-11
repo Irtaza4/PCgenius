@@ -119,7 +119,26 @@ class _HomeScreenState extends State<HomeScreen> {
                     setState(() {
                       isLoadingCustomBuild = false;
                     });
-                    Navigator.push(context, MaterialPageRoute(builder: (context)=>CustomBuild()));
+                    Navigator.push(
+                      context,
+                      PageRouteBuilder(
+                        pageBuilder: (context, animation, secondaryAnimation) => CustomBuild(),
+                        transitionsBuilder: (context, animation, secondaryAnimation, child) {
+                          const begin = Offset(1.0, 0.0); // Start from the right side
+                          const end = Offset.zero;        // End at the center
+                          const curve = Curves.easeInOut;
+
+                          var tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+                          var offsetAnimation = animation.drive(tween);
+
+                          return SlideTransition(
+                            position: offsetAnimation,
+                            child: child,
+                          );
+                        },
+                      ),
+                    );
+
 
                   },
                   child: Container(
@@ -175,8 +194,24 @@ class _HomeScreenState extends State<HomeScreen> {
                     });
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => AiPcBuilder()),
+                      PageRouteBuilder(
+                        pageBuilder: (context, animation, secondaryAnimation) => AiPcBuilder(),
+                        transitionsBuilder: (context, animation, secondaryAnimation, child) {
+                          const begin = Offset(1.0, 0.0); // Start from the right side
+                          const end = Offset.zero;        // End at the center
+                          const curve = Curves.easeInOut;
+
+                          var tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+                          var offsetAnimation = animation.drive(tween);
+
+                          return SlideTransition(
+                            position: offsetAnimation,
+                            child: child,
+                          );
+                        },
+                      ),
                     );
+
                   },
                   child: Container(
                     height: 70,
