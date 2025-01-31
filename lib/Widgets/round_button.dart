@@ -24,8 +24,8 @@ class _RoundButtonState extends State<RoundButton> {
               borderRadius: BorderRadius.circular(10)
 
           ),
-          child: Center(child: widget.loading ? CircularProgressIndicator(strokeWidth: 3,color: Colors.white,)
-              : Text(widget.title,style: TextStyle(color: Colors.white,fontWeight: FontWeight.w900),),
+          child: Center(child: widget.loading ? const CircularProgressIndicator(strokeWidth: 3,color: Colors.white,)
+              : Text(widget.title,style: const TextStyle(color: Colors.white,fontWeight: FontWeight.w900),),
           )),
     );
   }

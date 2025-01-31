@@ -22,7 +22,7 @@ class _PowerSuppliesScreenState extends State<PowerSuppliesScreen> {
     return Scaffold(
       backgroundColor: Colors.black, // Setting the scaffold background color to black
       appBar: AppBar(
-        title: Text(
+        title: const Text(
           'POWER SUPPLIES VARIANTS',
           style: TextStyle(
             fontWeight: FontWeight.bold,
@@ -36,22 +36,22 @@ class _PowerSuppliesScreenState extends State<PowerSuppliesScreen> {
               _auth.signOut().then((value) {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => LoginScreen()),
+                  MaterialPageRoute(builder: (context) => const LoginScreen()),
                 );
               }).onError((error, stackTrace) {
                 Utils().toastMessage(error.toString());
               });
             },
-            icon: Icon(Icons.logout_outlined, color: Colors.white),
+            icon: const Icon(Icons.logout_outlined, color: Colors.white),
           ),
-          SizedBox(width: 10),
+          const SizedBox(width: 10),
         ],
         elevation: 0,
         centerTitle: true,
         automaticallyImplyLeading: true,
         backgroundColor: Colors.transparent,
         flexibleSpace: Container(
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
             gradient: LinearGradient(
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
@@ -66,7 +66,7 @@ class _PowerSuppliesScreenState extends State<PowerSuppliesScreen> {
           Expanded(
             child: FirebaseAnimatedList(
               query: ref, // Firebase reference to fetch power supplies
-              defaultChild: Center(
+              defaultChild: const Center(
                 child: CircularProgressIndicator(
                   valueColor: AlwaysStoppedAnimation<Color>(Colors.greenAccent), // Green accent color
                   strokeWidth: 4.0, // Adjust thickness
@@ -89,7 +89,7 @@ class _PowerSuppliesScreenState extends State<PowerSuppliesScreen> {
                 return Column(
                   children: [
                     ListTile(
-                      contentPadding: EdgeInsets.symmetric(vertical: 10, horizontal: 8),
+                      contentPadding: const EdgeInsets.symmetric(vertical: 10, horizontal: 8),
                       leading: Container(
                         width: 60,
                         height: 90,
@@ -100,7 +100,7 @@ class _PowerSuppliesScreenState extends State<PowerSuppliesScreen> {
                             BoxShadow(
                               color: Colors.greenAccent.withOpacity(0.5), // Green accent shadow
                               blurRadius: 2,
-                              offset: Offset(2, 4), // Shadow offset
+                              offset: const Offset(2, 4), // Shadow offset
                             ),
                           ],
                           image: DecorationImage(
@@ -111,7 +111,7 @@ class _PowerSuppliesScreenState extends State<PowerSuppliesScreen> {
                       ),
                       title: Text(
                         name,
-                        style: TextStyle(
+                        style: const TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.bold,
                           color: Colors.white,
@@ -121,29 +121,29 @@ class _PowerSuppliesScreenState extends State<PowerSuppliesScreen> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           _buildInfoRow('Modular: ', modular),
-                          SizedBox(height: 5),
+                          const SizedBox(height: 5),
                           _buildInfoRow('Type: ', type),
-                          SizedBox(height: 5),
+                          const SizedBox(height: 5),
                           _buildInfoRow('Color: ', color),
-                          SizedBox(height: 5),
+                          const SizedBox(height: 5),
                           _buildInfoRow('Certification: ', certification),
-                          SizedBox(height: 5),
+                          const SizedBox(height: 5),
                           Row(
                             children: [
-                              Text(
+                              const Text(
                                 'Price: ',
                                 style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
                               ),
                               Flexible(
                                 child: Text(
-                                  '$pricePkr \RS',
-                                  style: TextStyle(color: Colors.green),
+                                  '$pricePkr RS',
+                                  style: const TextStyle(color: Colors.green),
                                   overflow: TextOverflow.ellipsis, // Prevents overflow
                                 ),
                               ),
                             ],
                           ),
-                          SizedBox(height: 5),
+                          const SizedBox(height: 5),
                           _buildInfoRow('Wattage: ', wattage),
                         ],
                       ),
@@ -170,7 +170,7 @@ class _PowerSuppliesScreenState extends State<PowerSuppliesScreen> {
                         ),
                       ),
                     ),
-                    Divider(color: Colors.grey, thickness: 1), // Grey line between variants
+                    const Divider(color: Colors.grey, thickness: 1), // Grey line between variants
                   ],
                 );
               },
@@ -187,12 +187,12 @@ class _PowerSuppliesScreenState extends State<PowerSuppliesScreen> {
       children: [
         Text(
           label,
-          style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+          style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
         ),
         Flexible(
           child: Text(
             value,
-            style: TextStyle(color: Colors.white),
+            style: const TextStyle(color: Colors.white),
             overflow: TextOverflow.ellipsis, // Prevents text overflow
           ),
         ),

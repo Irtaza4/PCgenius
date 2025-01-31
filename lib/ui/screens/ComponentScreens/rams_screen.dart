@@ -23,7 +23,7 @@ class _RAMScreenState extends State<RAMScreen> {
     return Scaffold(
       backgroundColor: Colors.black,
       appBar: AppBar(
-        title: Text(
+        title: const Text(
           'RAM VARIANTS',
           style: TextStyle(
             fontWeight: FontWeight.bold,
@@ -37,22 +37,22 @@ class _RAMScreenState extends State<RAMScreen> {
               _auth.signOut().then((value) {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => LoginScreen()),
+                  MaterialPageRoute(builder: (context) => const LoginScreen()),
                 );
               }).onError((error, stackTrace) {
                 Utils().toastMessage(error.toString());
               });
             },
-            icon: Icon(Icons.logout_outlined, color: Colors.white),
+            icon: const Icon(Icons.logout_outlined, color: Colors.white),
           ),
-          SizedBox(width: 10),
+          const SizedBox(width: 10),
         ],
         elevation: 0,
         centerTitle: true,
         automaticallyImplyLeading: true,
         backgroundColor: Colors.transparent,
         flexibleSpace: Container(
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
             gradient: LinearGradient(
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
@@ -67,7 +67,7 @@ class _RAMScreenState extends State<RAMScreen> {
           Expanded(
             child: FirebaseAnimatedList(
               query: ref, // Firebase reference to fetch RAM variants
-              defaultChild: Center(
+              defaultChild: const Center(
                 child: CircularProgressIndicator(
                   valueColor: AlwaysStoppedAnimation<Color>(Colors.greenAccent),
                   strokeWidth: 4.0,
@@ -90,7 +90,7 @@ class _RAMScreenState extends State<RAMScreen> {
                 return Column(
                   children: [
                     ListTile(
-                      contentPadding: EdgeInsets.symmetric(vertical: 10, horizontal: 8),
+                      contentPadding: const EdgeInsets.symmetric(vertical: 10, horizontal: 8),
                       leading: Container(
                         width: 60,
                         height: 90,
@@ -101,7 +101,7 @@ class _RAMScreenState extends State<RAMScreen> {
                             BoxShadow(
                               color: Colors.greenAccent.withOpacity(0.5),
                               blurRadius: 2,
-                              offset: Offset(2, 4),
+                              offset: const Offset(2, 4),
                             ),
                           ],
                           image: DecorationImage(
@@ -112,7 +112,7 @@ class _RAMScreenState extends State<RAMScreen> {
                       ),
                       title: Text(
                         brandModel,
-                        style: TextStyle(
+                        style: const TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.bold,
                           color: Colors.white,
@@ -122,27 +122,27 @@ class _RAMScreenState extends State<RAMScreen> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           _buildInfoRow('Capacity: ', capacity),
-                          SizedBox(height: 5),
+                          const SizedBox(height: 5),
                           _buildInfoRow('CAS Latency: ', casLatency),
-                          SizedBox(height: 5),
+                          const SizedBox(height: 5),
                           _buildInfoRow('Latency: ', latency),
-                          SizedBox(height: 5),
+                          const SizedBox(height: 5),
                           _buildInfoRow('Color: ', color),
-                          SizedBox(height: 5),
+                          const SizedBox(height: 5),
                           _buildInfoRow('Configuration: ', modelConfiguration),
-                          SizedBox(height: 5),
+                          const SizedBox(height: 5),
                           _buildInfoRow('Type/Speed: ', typeSpeed),
-                          SizedBox(height: 5),
+                          const SizedBox(height: 5),
                           Row(
                             children: [
-                              Text(
+                              const Text(
                                 'Price: ',
                                 style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
                               ),
                               Flexible(
                                 child: Text(
                                   '$price ',
-                                  style: TextStyle(color: Colors.green),
+                                  style: const TextStyle(color: Colors.green),
                                   overflow: TextOverflow.ellipsis,
                                 ),
                               ),
@@ -173,7 +173,7 @@ class _RAMScreenState extends State<RAMScreen> {
                         ),
                       ),
                     ),
-                    Divider(color: Colors.grey, thickness: 1),
+                    const Divider(color: Colors.grey, thickness: 1),
                   ],
                 );
               },
@@ -190,12 +190,12 @@ class _RAMScreenState extends State<RAMScreen> {
       children: [
         Text(
           label,
-          style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+          style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
         ),
         Flexible(
           child: Text(
             value,
-            style: TextStyle(color: Colors.white),
+            style: const TextStyle(color: Colors.white),
             overflow: TextOverflow.ellipsis,
           ),
         ),

@@ -8,7 +8,7 @@ class CustomButton extends StatelessWidget {
   final Color backgroundColor; // Added parameter for background color
   final Color textColor; // Added parameter for text color
 
-  CustomButton({
+  const CustomButton({super.key, 
     required this.label,
     required this.icon,
     required this.onTap,
@@ -36,7 +36,7 @@ class CustomButton extends StatelessWidget {
                 color: Colors.greenAccent.withOpacity(0.3),
                 spreadRadius: 3,
                 blurRadius: 5,
-                offset: Offset(0, 3),
+                offset: const Offset(0, 3),
               ),
             ],
           ),
@@ -47,7 +47,7 @@ class CustomButton extends StatelessWidget {
               mainAxisSize: MainAxisSize.min,
               children: [
                 Icon(icon, color: textColor, size: 24), // Use dynamic text color
-                SizedBox(width: 8),
+                const SizedBox(width: 8),
 
                 Text(
                   label,
@@ -58,7 +58,7 @@ class CustomButton extends StatelessWidget {
                     shadows: [
                       Shadow(
                         color: Colors.black.withOpacity(0.5),
-                        offset: Offset(2.0, 2.0),
+                        offset: const Offset(2.0, 2.0),
                         blurRadius: 5.0,
                       ),
                     ],

@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class CustomBuildResultScreen extends StatelessWidget {
   final Map<String, Map<String, dynamic>?> components;
 
-  CustomBuildResultScreen({required this.components});
+  const CustomBuildResultScreen({super.key, required this.components});
 
   // Helper method to get a value from multiple possible keys
   String getFieldValue(Map<String, dynamic> component, List<String> possibleKeys, {String fallback = 'Unknown'}) {

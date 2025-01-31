@@ -13,8 +13,8 @@ class AiPcBuilder extends StatefulWidget {
 
 class _AiPcBuilderState extends State<AiPcBuilder> {
   final _auth = FirebaseAuth.instance;
-  String? selectedBudget = null; // Initially set to null for placeholder
-  String? selectedPcType = null; // Initially set to null for placeholder
+  String? selectedBudget; // Initially set to null for placeholder
+  String? selectedPcType; // Initially set to null for placeholder
   String? errorMessage;
 
   @override
@@ -62,7 +62,7 @@ class _AiPcBuilderState extends State<AiPcBuilder> {
     return Scaffold(
       backgroundColor: Colors.black,
       appBar: AppBar(
-        title: Text(
+        title: const Text(
           'EASY BUILD',
           style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
         ),
@@ -70,21 +70,21 @@ class _AiPcBuilderState extends State<AiPcBuilder> {
           IconButton(
             onPressed: () {
               _auth.signOut().then((value) {
-                Navigator.push(context, MaterialPageRoute(builder: (context) => LoginScreen()));
+                Navigator.push(context, MaterialPageRoute(builder: (context) => const LoginScreen()));
               }).onError((error, stackTrace) {
                 Utils().toastMessage(error.toString());
               });
             },
-            icon: Icon(Icons.logout_outlined, color: Colors.white),
+            icon: const Icon(Icons.logout_outlined, color: Colors.white),
           ),
-          SizedBox(width: 10),
+          const SizedBox(width: 10),
         ],
         elevation: 0,
         centerTitle: true,
         automaticallyImplyLeading: true,
         backgroundColor: Colors.transparent,
         flexibleSpace: Container(
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
             gradient: LinearGradient(
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
@@ -121,14 +121,14 @@ class _AiPcBuilderState extends State<AiPcBuilder> {
                     shadows: [
                       Shadow(
                         color: Colors.green.withOpacity(0.5),
-                        offset: Offset(3.0, 3.0),
+                        offset: const Offset(3.0, 3.0),
                         blurRadius: 5.0,
                       ),
                     ],
                   ),
                 ),
               ),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
 
               // Budget Input Dropdown
               Column(
@@ -158,7 +158,7 @@ class _AiPcBuilderState extends State<AiPcBuilder> {
                     ),
                     dropdownColor: const Color(0xFF2F4F2F),
                     style: const TextStyle(color: Colors.white),
-                    items: [
+                    items: const [
                       DropdownMenuItem(value: "50000", child: Text("50,000 - 70,000")),
                       DropdownMenuItem(value: "70000", child: Text("70,000 - 90,000")),
                       DropdownMenuItem(value: "90000", child: Text("90,000 - 110,000")),
@@ -221,7 +221,7 @@ class _AiPcBuilderState extends State<AiPcBuilder> {
                     ),
                     dropdownColor: const Color(0xFF2F4F2F),
                     style: const TextStyle(color: Colors.white),
-                    items: [
+                    items: const [
                       DropdownMenuItem(value: "Gaming", child: Text("Gaming")),
                       DropdownMenuItem(value: "Graphic Designing", child: Text("Graphic Designing")),
                       DropdownMenuItem(value: "Office Work", child: Text("Office Work")),
@@ -256,7 +256,7 @@ class _AiPcBuilderState extends State<AiPcBuilder> {
                     shadows: [
                       Shadow(
                         color: Colors.black.withOpacity(0.6), // Green accent shadow
-                        offset: Offset(2.0, 2.0),
+                        offset: const Offset(2.0, 2.0),
                         blurRadius: 5.0,
                       ),
                     ],

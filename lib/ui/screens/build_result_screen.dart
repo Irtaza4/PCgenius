@@ -6,7 +6,7 @@ class BuildResultsScreen extends StatelessWidget {
   final String budget;
   final String pcType;
 
-  const BuildResultsScreen({Key? key, required this.budget, required this.pcType}) : super(key: key);
+  const BuildResultsScreen({super.key, required this.budget, required this.pcType});
 
   // Helper method to convert the budget string to an integer
   int get budgetValue => int.tryParse(budget) ?? 0;
@@ -19,7 +19,7 @@ class BuildResultsScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.black,
       appBar: AppBar(
-        title: Text(
+        title: const Text(
           "Your Build",
           style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
         ),
@@ -28,7 +28,7 @@ class BuildResultsScreen extends StatelessWidget {
         automaticallyImplyLeading: true,
         backgroundColor: Colors.transparent,
         flexibleSpace: Container(
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
             gradient: LinearGradient(
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
@@ -54,13 +54,13 @@ class BuildResultsScreen extends StatelessWidget {
                   shadows: [
                     Shadow(
                       color: Colors.green.withOpacity(0.5),
-                      offset: Offset(3.0, 3.0),
+                      offset: const Offset(3.0, 3.0),
                       blurRadius: 5.0,
                     ),
                   ],
                 ),
               ),
-              SizedBox(height: 10),
+              const SizedBox(height: 10),
               Text(
                 'With Budget of $budget',
                 style: TextStyle(
@@ -71,13 +71,13 @@ class BuildResultsScreen extends StatelessWidget {
                   shadows: [
                     Shadow(
                       color: Colors.green.withOpacity(0.5),
-                      offset: Offset(3.0, 3.0),
+                      offset: const Offset(3.0, 3.0),
                       blurRadius: 5.0,
                     ),
                   ],
                 ),
               ),
-              SizedBox(height: 25),
+              const SizedBox(height: 25),
               Container(
                 width: 200,
                 height: 150,
@@ -97,7 +97,7 @@ class BuildResultsScreen extends StatelessWidget {
 
                 ),
               ),
-              SizedBox(height: 5),
+              const SizedBox(height: 5),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -106,17 +106,17 @@ class BuildResultsScreen extends StatelessWidget {
                     child: Column(
                       children: [
                         _buildIcon(Icons.computer_outlined, 'Processor'),
-                        Text(buildData['Processor']!, style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold,fontSize: 12)),
-                        SizedBox(height: 20),
+                        Text(buildData['Processor']!, style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold,fontSize: 12)),
+                        const SizedBox(height: 20),
                         _buildIcon(Icons.memory, 'RAM'),
-                        Text(buildData['RAM']!, style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold,fontSize: 12)),
-                        SizedBox(height: 20),
+                        Text(buildData['RAM']!, style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold,fontSize: 12)),
+                        const SizedBox(height: 20),
                         _buildIcon(Icons.storage, 'HDD'),
-                        Text(buildData['HDD']!, style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold,fontSize: 12)),
-                        SizedBox(height: 20),
+                        Text(buildData['HDD']!, style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold,fontSize: 12)),
+                        const SizedBox(height: 20),
                         _buildIcon(Icons.power, 'Power Supply'),
-                        Text(buildData['PowerSupply']!, style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold,fontSize: 12)),
-                        SizedBox(height: 20),
+                        Text(buildData['PowerSupply']!, style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold,fontSize: 12)),
+                        const SizedBox(height: 20),
                       ],
                     ),
                   ),
@@ -125,17 +125,17 @@ class BuildResultsScreen extends StatelessWidget {
                     child: Column(
                       children: [
                         _buildIcon(Icons.video_label, 'Graphics Card (GPU)'),
-                        Text(buildData['GPU']!, style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold,fontSize: 12)),
-                        SizedBox(height: 20),
+                        Text(buildData['GPU']!, style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold,fontSize: 12)),
+                        const SizedBox(height: 20),
                         _buildIcon(Icons.storage, 'SSD'),
-                        Text(buildData['SSD']!, style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold,fontSize: 12)),
-                        SizedBox(height: 20),
+                        Text(buildData['SSD']!, style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold,fontSize: 12)),
+                        const SizedBox(height: 20),
                         _buildIcon(Icons.developer_board_sharp, 'Motherboard'),
-                        Text(buildData['Motherboard']!, style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold,fontSize: 12)),
-                        SizedBox(height: 20),
+                        Text(buildData['Motherboard']!, style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold,fontSize: 12)),
+                        const SizedBox(height: 20),
                         _buildIcon(Icons.tv, 'Case'),
-                        Text(buildData['Case']!, style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold,fontSize: 12)),
-                        SizedBox(height: 20),
+                        Text(buildData['Case']!, style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold,fontSize: 12)),
+                        const SizedBox(height: 20),
                       ],
                     ),
                   ),
@@ -144,7 +144,7 @@ class BuildResultsScreen extends StatelessWidget {
             ],
           ),
         )
-            : Center(
+            : const Center(
           child: Text(
             'No suitable builds found for this budget and PC type.',
             style: TextStyle(
@@ -162,7 +162,7 @@ class BuildResultsScreen extends StatelessWidget {
   // This method selects the appropriate build data based on the budget and pcType
   Map<String, String> _getBuildData() {
     // Filter builds based on the budget and pcType
-    var builds;
+    List<Map<String, dynamic>> builds=[];
     if (pcType == 'Gaming') {
       builds = PcBuildData.gamingBuilds;
     } else if (pcType == 'Office Work') {
@@ -171,14 +171,12 @@ class BuildResultsScreen extends StatelessWidget {
       builds = PcBuildData.graphicDesigningBuilds;
     }
 
-    if (builds != null) {
-      for (var build in builds) {
-        if (budgetValue >= build['minBudget'] && budgetValue <= build['maxBudget']) {
-          return build['build'];
-        }
+    for (var build in builds) {
+      if (budgetValue >= build['minBudget'] && budgetValue <= build['maxBudget']) {
+        return build['build'];
       }
     }
-
+  
     Utils().toastMessage('Try Again');
     return {}; // Return an empty map to stay on the same screen
   }
@@ -191,10 +189,10 @@ class BuildResultsScreen extends StatelessWidget {
           color: Colors.green,
           size: 30,
         ),
-        SizedBox(height: 5),
+        const SizedBox(height: 5),
         Text(
           label,
-          style: TextStyle(
+          style: const TextStyle(
             color: Colors.green,
             fontWeight: FontWeight.w500,
           ),

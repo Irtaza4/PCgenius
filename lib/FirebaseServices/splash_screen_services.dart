@@ -6,19 +6,19 @@ import 'dart:async';
 
 class SplashScreenServices {
   void isLogin(BuildContext context) {
-    final _auth = FirebaseAuth.instance;
-    final user = _auth.currentUser;
+    final auth = FirebaseAuth.instance;
+    final user = auth.currentUser;
 
-    Timer(Duration(seconds: 3), () {
+    Timer(const Duration(seconds: 3), () {
       if (user != null) {
         Navigator.pushReplacement(
           context,
-          MaterialPageRoute(builder: (context) => HomeScreen()),
+          MaterialPageRoute(builder: (context) => const HomeScreen()),
         );
       } else {
         Navigator.pushReplacement(
           context,
-          MaterialPageRoute(builder: (context) => LoginScreen()),
+          MaterialPageRoute(builder: (context) => const LoginScreen()),
         );
       }
     });

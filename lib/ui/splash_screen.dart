@@ -14,7 +14,7 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
   late AnimationController _controller;
   String _displayedText = "";
   final String _fullText = "PC GENIUS";
-  final Duration _typingSpeed = Duration(milliseconds: 100);
+  final Duration _typingSpeed = const Duration(milliseconds: 100);
 
   @override
   void initState() {
@@ -22,7 +22,7 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
 
     // Initialize the rotation animation controller
     _controller = AnimationController(
-      duration: Duration(seconds: 5), // Slower rotation
+      duration: const Duration(seconds: 5), // Slower rotation
       vsync: this,
     )..repeat(); // Continuous rotation
 
@@ -62,7 +62,7 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
               width: 250, // Adjust the image width
             ),
           ),
-          SizedBox(height: 120),
+          const SizedBox(height: 120),
           // Rotating Icons forming a loading circle
           Stack(
             alignment: Alignment.center,
@@ -73,7 +73,7 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
               _buildRotatingIcon(Icons.power, 270), // Icon 4
             ],
           ),
-          SizedBox(height: 150),
+          const SizedBox(height: 150),
           // Displaying the typed text
           Center(
             child: Stack(
@@ -93,7 +93,7 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
                 ),
                 Text(
                   _displayedText,
-                  style: TextStyle(
+                  style: const TextStyle(
                     color: Colors.green,
                     fontSize: 50,
                     fontWeight: FontWeight.w600,

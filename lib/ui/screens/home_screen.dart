@@ -2,9 +2,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:pc_genius/ui/screens/ai_pc_builder.dart';
 import 'package:pc_genius/ui/screens/custom_build.dart';
-import 'package:pc_genius/ui/screens/signup_screen.dart'; // Adjust your screen navigation here
+// Adjust your screen navigation here
 import 'package:pc_genius/ui/screens/login_screen.dart'; // Adjust navigation to login if needed
-import 'package:pc_genius/Widgets/round_button.dart';
 
 import '../../Utils/utils.dart'; // Your custom round button widget
 
@@ -25,7 +24,7 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       backgroundColor: Colors.black,
       appBar: AppBar(
-        title: Text(
+        title: const Text(
           'Home',
           style: TextStyle(fontWeight: FontWeight.w500, color: Colors.white),
         ),
@@ -35,22 +34,22 @@ class _HomeScreenState extends State<HomeScreen> {
               _auth.signOut().then((value) {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => LoginScreen()),
+                  MaterialPageRoute(builder: (context) => const LoginScreen()),
                 );
               }).onError((error, stackTrace) {
                 Utils().toastMessage(error.toString());
               });
             },
-            icon: Icon(Icons.logout_outlined, color: Colors.white),
+            icon: const Icon(Icons.logout_outlined, color: Colors.white),
           ),
-          SizedBox(width: 10),
+          const SizedBox(width: 10),
         ],
         elevation: 0,
         centerTitle: true,
         automaticallyImplyLeading: false,
         backgroundColor: Colors.transparent,
         flexibleSpace: Container(
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
             gradient: LinearGradient(
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
@@ -85,7 +84,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       shadows: [
                         Shadow(
                           color: Colors.green.withOpacity(0.5),
-                          offset: Offset(3.0, 3.0),
+                          offset: const Offset(3.0, 3.0),
                           blurRadius: 5.0,
                         ),
                       ],
@@ -103,7 +102,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 ),
               ),
-              SizedBox(height: 40),
+              const SizedBox(height: 40),
               Material(
                 color: Colors.transparent,
                 child: InkWell(
@@ -113,7 +112,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     setState(() {
                       isLoadingCustomBuild = true;
                     });
-                    await Future.delayed(Duration(seconds: 1)).then((value){
+                    await Future.delayed(const Duration(seconds: 1)).then((value){
                       Utilas().toastMessage('Add all Components!');
                     });// Simulate loading
                     setState(() {
@@ -122,7 +121,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     Navigator.push(
                       context,
                       PageRouteBuilder(
-                        pageBuilder: (context, animation, secondaryAnimation) => CustomBuild(),
+                        pageBuilder: (context, animation, secondaryAnimation) => const CustomBuild(),
                         transitionsBuilder: (context, animation, secondaryAnimation, child) {
                           const begin = Offset(1.0, 0.0); // Start from the right side
                           const end = Offset.zero;        // End at the center
@@ -152,13 +151,13 @@ class _HomeScreenState extends State<HomeScreen> {
                           color: Colors.green.withOpacity(0.3),
                           spreadRadius: 3,
                           blurRadius: 5,
-                          offset: Offset(0, 3),
+                          offset: const Offset(0, 3),
                         ),
                       ],
                     ),
                     child: Center(
                       child: isLoadingCustomBuild
-                          ? CircularProgressIndicator(color: Colors.white)
+                          ? const CircularProgressIndicator(color: Colors.white)
                           : Text(
                         'CUSTOM BUILD',
                         style: TextStyle(
@@ -168,7 +167,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           shadows: [
                             Shadow(
                               color: Colors.black.withOpacity(0.5),
-                              offset: Offset(2.0, 2.0),
+                              offset: const Offset(2.0, 2.0),
                               blurRadius: 5.0,
                             ),
                           ],
@@ -178,7 +177,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 ),
               ),
-              SizedBox(height: 30),
+              const SizedBox(height: 30),
               Material(
                 color: Colors.transparent,
                 child: InkWell(
@@ -188,14 +187,14 @@ class _HomeScreenState extends State<HomeScreen> {
                     setState(() {
                       isLoadingAIBuild = true;
                     });
-                    await Future.delayed(Duration(seconds: 1)); // Simulate loading
+                    await Future.delayed(const Duration(seconds: 1)); // Simulate loading
                     setState(() {
                       isLoadingAIBuild = false;
                     });
                     Navigator.push(
                       context,
                       PageRouteBuilder(
-                        pageBuilder: (context, animation, secondaryAnimation) => AiPcBuilder(),
+                        pageBuilder: (context, animation, secondaryAnimation) => const AiPcBuilder(),
                         transitionsBuilder: (context, animation, secondaryAnimation, child) {
                           const begin = Offset(1.0, 0.0); // Start from the right side
                           const end = Offset.zero;        // End at the center
@@ -224,13 +223,13 @@ class _HomeScreenState extends State<HomeScreen> {
                           color: Colors.greenAccent.withOpacity(0.3),
                           spreadRadius: 3,
                           blurRadius: 5,
-                          offset: Offset(0, 3),
+                          offset: const Offset(0, 3),
                         ),
                       ],
                     ),
                     child: Center(
                       child: isLoadingAIBuild
-                          ? CircularProgressIndicator(color: Colors.greenAccent)
+                          ? const CircularProgressIndicator(color: Colors.greenAccent)
                           : Text(
                         'EASY BUILD',
                         style: TextStyle(
@@ -240,7 +239,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           shadows: [
                             Shadow(
                               color: Colors.black.withOpacity(0.5),
-                              offset: Offset(2.0, 2.0),
+                              offset: const Offset(2.0, 2.0),
                               blurRadius: 5.0,
                             ),
                           ],

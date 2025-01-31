@@ -24,7 +24,7 @@ class _CasesScreenState extends State<CasesScreen> {
       backgroundColor: Colors.black,
       // Setting the scaffold background color to black
       appBar: AppBar(
-        title: Text(
+        title: const Text(
           'PC CASE VARIANTS',
           style: TextStyle(
             fontWeight: FontWeight.bold,
@@ -38,22 +38,22 @@ class _CasesScreenState extends State<CasesScreen> {
               _auth.signOut().then((value) {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => LoginScreen()),
+                  MaterialPageRoute(builder: (context) => const LoginScreen()),
                 );
               }).onError((error, stackTrace) {
                 Utils().toastMessage(error.toString());
               });
             },
-            icon: Icon(Icons.logout_outlined, color: Colors.white),
+            icon: const Icon(Icons.logout_outlined, color: Colors.white),
           ),
-          SizedBox(width: 10),
+          const SizedBox(width: 10),
         ],
         elevation: 0,
         centerTitle: true,
         automaticallyImplyLeading: true,
         backgroundColor: Colors.transparent,
         flexibleSpace: Container(
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
             gradient: LinearGradient(
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
@@ -68,7 +68,7 @@ class _CasesScreenState extends State<CasesScreen> {
           Expanded(
             child: FirebaseAnimatedList(
               query: ref, // Firebase reference to fetch cases
-              defaultChild: Center(
+              defaultChild: const Center(
                 child: CircularProgressIndicator(
                   valueColor: AlwaysStoppedAnimation<Color>(Colors.greenAccent),
                   // Green accent color
@@ -96,7 +96,7 @@ class _CasesScreenState extends State<CasesScreen> {
                   children: [
                     ListTile(
                       contentPadding:
-                          EdgeInsets.symmetric(vertical: 10, horizontal: 8),
+                          const EdgeInsets.symmetric(vertical: 10, horizontal: 8),
                       leading: Container(
                         width: 60,
                         height: 90,
@@ -111,7 +111,7 @@ class _CasesScreenState extends State<CasesScreen> {
                               color: Colors.greenAccent.withOpacity(0.5),
                               // Green accent shadow
                               blurRadius: 2,
-                              offset: Offset(2, 4), // Shadow offset
+                              offset: const Offset(2, 4), // Shadow offset
                             ),
                           ],
                           image: DecorationImage(
@@ -122,7 +122,7 @@ class _CasesScreenState extends State<CasesScreen> {
                       ),
                       title: Text(
                         name,
-                        style: TextStyle(
+                        style: const TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.bold,
                           color: Colors.white,
@@ -132,16 +132,16 @@ class _CasesScreenState extends State<CasesScreen> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           _buildInfoRow('Internal Bays: ', internalBays),
-                          SizedBox(height: 5),
+                          const SizedBox(height: 5),
                           _buildInfoRow('Side Panel: ', sidePanel),
-                          SizedBox(height: 5),
+                          const SizedBox(height: 5),
                           _buildInfoRow('Type: ', type),
-                          SizedBox(height: 5),
+                          const SizedBox(height: 5),
                           _buildInfoRow('Volume: ', volume),
-                          SizedBox(height: 5),
+                          const SizedBox(height: 5),
                           Row(
                             children: [
-                              Text(
+                              const Text(
                                 'Price (PKR): ',
                                 style: TextStyle(
                                     color: Colors.white,
@@ -149,15 +149,15 @@ class _CasesScreenState extends State<CasesScreen> {
                               ),
                               Flexible(
                                 child: Text(
-                                  '$pricePkr',
-                                  style: TextStyle(color: Colors.green),
+                                  pricePkr,
+                                  style: const TextStyle(color: Colors.green),
                                   overflow: TextOverflow
                                       .ellipsis, // Prevents overflow
                                 ),
                               ),
                             ],
                           ),
-                          SizedBox(height: 5),
+                          const SizedBox(height: 5),
                           _buildInfoRow('Color: ', color), // Display color
                         ],
                       ),
@@ -184,7 +184,7 @@ class _CasesScreenState extends State<CasesScreen> {
                         ),
                       ),
                     ),
-                    Divider(color: Colors.grey, thickness: 1),
+                    const Divider(color: Colors.grey, thickness: 1),
                     // Grey line between variants
                   ],
                 );
@@ -202,12 +202,12 @@ class _CasesScreenState extends State<CasesScreen> {
       children: [
         Text(
           label,
-          style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+          style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
         ),
         Flexible(
           child: Text(
             value,
-            style: TextStyle(color: Colors.white),
+            style: const TextStyle(color: Colors.white),
             overflow: TextOverflow.ellipsis, // Prevents text overflow
           ),
         ),

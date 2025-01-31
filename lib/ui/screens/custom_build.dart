@@ -46,7 +46,7 @@ class _CustomBuildState extends State<CustomBuild> {
     return Scaffold(
       backgroundColor: Colors.black,
       appBar: AppBar(
-        title: Text(
+        title: const Text(
           'CUSTOM BUILD',
           style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
         ),
@@ -56,22 +56,22 @@ class _CustomBuildState extends State<CustomBuild> {
               _auth.signOut().then((value) {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => LoginScreen()),
+                  MaterialPageRoute(builder: (context) => const LoginScreen()),
                 );
               }).onError((error, stackTrace) {
                 Utils().toastMessage(error.toString());
               });
             },
-            icon: Icon(Icons.logout_outlined, color: Colors.white),
+            icon: const Icon(Icons.logout_outlined, color: Colors.white),
           ),
-          SizedBox(width: 10),
+          const SizedBox(width: 10),
         ],
         elevation: 0,
         centerTitle: true,
         automaticallyImplyLeading: true,
         backgroundColor: Colors.transparent,
         flexibleSpace: Container(
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
             gradient: LinearGradient(
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
@@ -84,7 +84,7 @@ class _CustomBuildState extends State<CustomBuild> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            SizedBox(height: 15),
+            const SizedBox(height: 15),
             Center(
               child: Text(
                 'ADD COMPONENTS',
@@ -96,14 +96,14 @@ class _CustomBuildState extends State<CustomBuild> {
                   shadows: [
                     Shadow(
                       color: Colors.green.withOpacity(0.5),
-                      offset: Offset(3.0, 3.0),
+                      offset: const Offset(3.0, 3.0),
                       blurRadius: 5.0,
                     ),
                   ],
                 ),
               ),
             ),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
@@ -123,7 +123,7 @@ class _CustomBuildState extends State<CustomBuild> {
 
                             final selectedProcessorData = await Navigator.push(
                               context,
-                              MaterialPageRoute(builder: (context) => ProcessorsScreen()),
+                              MaterialPageRoute(builder: (context) => const ProcessorsScreen()),
                             );
 
                             setState(() {
@@ -141,7 +141,7 @@ class _CustomBuildState extends State<CustomBuild> {
                               ? Colors.black
                               : Colors.white,
                         ),
-                        SizedBox(height: 20),
+                        const SizedBox(height: 20),
                         CustomButton(
                           label: "RAM",
                           icon: Icons.memory,
@@ -152,7 +152,7 @@ class _CustomBuildState extends State<CustomBuild> {
 
                             final selectedRamData = await Navigator.push(
                               context,
-                              MaterialPageRoute(builder: (context) => RAMScreen()),
+                              MaterialPageRoute(builder: (context) => const RAMScreen()),
                             );
 
                             setState(() {
@@ -170,7 +170,7 @@ class _CustomBuildState extends State<CustomBuild> {
                               ? Colors.black
                               : Colors.white,
                         ),
-                        SizedBox(height: 20),
+                        const SizedBox(height: 20),
                         CustomButton(
                           label: "MOTHERBOARD",
                           icon: Icons.developer_board_sharp,
@@ -182,7 +182,7 @@ class _CustomBuildState extends State<CustomBuild> {
                             final selectedMotherboardData = await Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => MotherboardsScreen()),
+                                  builder: (context) => const MotherboardsScreen()),
                             );
 
                             setState(() {
@@ -220,7 +220,7 @@ class _CustomBuildState extends State<CustomBuild> {
 
                             final selectedGpuData = await Navigator.push(
                               context,
-                              MaterialPageRoute(builder: (context) => GPUScreen()),
+                              MaterialPageRoute(builder: (context) => const GPUScreen()),
                             );
 
                             setState(() {
@@ -238,7 +238,7 @@ class _CustomBuildState extends State<CustomBuild> {
                               ? Colors.black
                               : Colors.white,
                         ),
-                        SizedBox(height: 20),
+                        const SizedBox(height: 20),
                         CustomButton(
                           label: "POWER SUPPLY",
                           icon: Icons.power,
@@ -250,7 +250,7 @@ class _CustomBuildState extends State<CustomBuild> {
                             final selectedPowerSupplyData = await Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => PowerSuppliesScreen()),
+                                  builder: (context) => const PowerSuppliesScreen()),
                             );
 
                             setState(() {
@@ -268,7 +268,7 @@ class _CustomBuildState extends State<CustomBuild> {
                               ? Colors.black
                               : Colors.white,
                         ),
-                        SizedBox(height: 20),
+                        const SizedBox(height: 20),
                         CustomButton(
                           label: "CASES",
                           icon: Icons.tv,
@@ -279,7 +279,7 @@ class _CustomBuildState extends State<CustomBuild> {
 
                             final selectedCasesData = await Navigator.push(
                               context,
-                              MaterialPageRoute(builder: (context) => CasesScreen()),
+                              MaterialPageRoute(builder: (context) => const CasesScreen()),
                             );
 
                             setState(() {
@@ -318,7 +318,7 @@ class _CustomBuildState extends State<CustomBuild> {
 
                     final selectedSsdData = await Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => SsdScreen()),
+                      MaterialPageRoute(builder: (context) => const SsdScreen()),
                     );
 
                     setState(() {
@@ -335,14 +335,14 @@ class _CustomBuildState extends State<CustomBuild> {
               ),
             ),
 
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
 
             Column(
               children: [
                 // Processor Card
                 if (selectedProcessor != null)
                   Card(
-                    margin: EdgeInsets.symmetric(vertical: 4),
+                    margin: const EdgeInsets.symmetric(vertical: 4),
                     elevation: 5,
                     color: Colors.black,
                     shape: RoundedRectangleBorder(
@@ -353,7 +353,7 @@ class _CustomBuildState extends State<CustomBuild> {
                       ),
                     ),
                     child: ListTile(
-                      contentPadding: EdgeInsets.symmetric(vertical: 8, horizontal: 12),
+                      contentPadding: const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
                       leading: Container(
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(8),
@@ -363,7 +363,7 @@ class _CustomBuildState extends State<CustomBuild> {
                       ),
                       title: Text(
                         selectedProcessor!['name']!,
-                        style: TextStyle(
+                        style: const TextStyle(
                           color: Colors.white,
                           fontSize: 16,
                           fontWeight: FontWeight.bold,
@@ -372,13 +372,13 @@ class _CustomBuildState extends State<CustomBuild> {
                       ),
                       subtitle: Text(
                         ' ${selectedProcessor!['price']} RS',
-                        style: TextStyle(color: Colors.green, fontSize: 14),
+                        style: const TextStyle(color: Colors.green, fontSize: 14),
                       ),
                       trailing: Row(
                         mainAxisSize: MainAxisSize.min,
                         children: [
                           IconButton(
-                            icon: Icon(Icons.delete, color: Colors.red),
+                            icon: const Icon(Icons.delete, color: Colors.red),
                             onPressed: () {
                               setState(() {
                                 selectedProcessor = null;
@@ -386,7 +386,7 @@ class _CustomBuildState extends State<CustomBuild> {
                             },
                           ),
                           IconButton(
-                            icon: Icon(Icons.update, color: Colors.greenAccent), // Change color here
+                            icon: const Icon(Icons.update, color: Colors.greenAccent), // Change color here
                             onPressed: () async {
                               final updatedProcessor = await Navigator.push(
                                 context,
@@ -411,12 +411,12 @@ class _CustomBuildState extends State<CustomBuild> {
                 else
                   Container(),
 
-                Divider(color: Colors.transparent),
+                const Divider(color: Colors.transparent),
 
                 // RAM Card
                 if (selectedRam != null)
                   Card(
-                    margin: EdgeInsets.symmetric(vertical: 4),
+                    margin: const EdgeInsets.symmetric(vertical: 4),
                     elevation: 5,
                     color: Colors.black,
                     shape: RoundedRectangleBorder(
@@ -427,7 +427,7 @@ class _CustomBuildState extends State<CustomBuild> {
                       ),
                     ),
                     child: ListTile(
-                      contentPadding: EdgeInsets.symmetric(vertical: 8, horizontal: 12),
+                      contentPadding: const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
                       leading: Container(
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(8),
@@ -437,7 +437,7 @@ class _CustomBuildState extends State<CustomBuild> {
                       ),
                       title: Text(
                         selectedRam!['brand_model']!,
-                        style: TextStyle(
+                        style: const TextStyle(
                           color: Colors.white,
                           fontSize: 16,
                           fontWeight: FontWeight.bold,
@@ -446,13 +446,13 @@ class _CustomBuildState extends State<CustomBuild> {
                       ),
                       subtitle: Text(
                         ' ${selectedRam!['price']} RS ',
-                        style: TextStyle(color: Colors.green, fontSize: 14),
+                        style: const TextStyle(color: Colors.green, fontSize: 14),
                       ),
                       trailing: Row(
                         mainAxisSize: MainAxisSize.min,
                         children: [
                           IconButton(
-                            icon: Icon(Icons.delete, color: Colors.red),
+                            icon: const Icon(Icons.delete, color: Colors.red),
                             onPressed: () {
                               setState(() {
                                 selectedRam = null;
@@ -460,7 +460,7 @@ class _CustomBuildState extends State<CustomBuild> {
                             },
                           ),
                           IconButton(
-                            icon: Icon(Icons.update, color: Colors.greenAccent), // Change color here
+                            icon: const Icon(Icons.update, color: Colors.greenAccent), // Change color here
                             onPressed: () async {
                               final updatedRam = await Navigator.push(
                                 context,
@@ -485,12 +485,12 @@ class _CustomBuildState extends State<CustomBuild> {
                 else
                   Container(),
 
-                Divider(color: Colors.transparent),
+                const Divider(color: Colors.transparent),
 
                 // Motherboard Card
                 if (selectedMotherBoards != null)
                   Card(
-                    margin: EdgeInsets.symmetric(vertical: 4),
+                    margin: const EdgeInsets.symmetric(vertical: 4),
                     elevation: 5,
                     color: Colors.black,
                     shape: RoundedRectangleBorder(
@@ -501,7 +501,7 @@ class _CustomBuildState extends State<CustomBuild> {
                       ),
                     ),
                     child: ListTile(
-                      contentPadding: EdgeInsets.symmetric(vertical: 8, horizontal: 12),
+                      contentPadding: const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
                       leading: Container(
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(8),
@@ -511,7 +511,7 @@ class _CustomBuildState extends State<CustomBuild> {
                       ),
                       title: Text(
                         selectedMotherBoards!['name']!,
-                        style: TextStyle(
+                        style: const TextStyle(
                           color: Colors.white,
                           fontSize: 16,
                           fontWeight: FontWeight.bold,
@@ -520,13 +520,13 @@ class _CustomBuildState extends State<CustomBuild> {
                       ),
                       subtitle: Text(
                         ' ${selectedMotherBoards!['price']} RS',
-                        style: TextStyle(color: Colors.green, fontSize: 14),
+                        style: const TextStyle(color: Colors.green, fontSize: 14),
                       ),
                       trailing: Row(
                         mainAxisSize: MainAxisSize.min,
                         children: [
                           IconButton(
-                            icon: Icon(Icons.delete, color: Colors.red),
+                            icon: const Icon(Icons.delete, color: Colors.red),
                             onPressed: () {
                               setState(() {
                                 selectedMotherBoards = null;
@@ -534,7 +534,7 @@ class _CustomBuildState extends State<CustomBuild> {
                             },
                           ),
                           IconButton(
-                            icon: Icon(Icons.update, color: Colors.greenAccent), // Change color here
+                            icon: const Icon(Icons.update, color: Colors.greenAccent), // Change color here
                             onPressed: () async {
                               final updatedMotherboard = await Navigator.push(
                                 context,
@@ -559,12 +559,12 @@ class _CustomBuildState extends State<CustomBuild> {
                 else
                   Container(),
 
-                Divider(color: Colors.transparent),
+                const Divider(color: Colors.transparent),
 
                 // GPU Card
                 if (selectedGpus != null)
                   Card(
-                    margin: EdgeInsets.symmetric(vertical: 4),
+                    margin: const EdgeInsets.symmetric(vertical: 4),
                     elevation: 5,
                     color: Colors.black,
                     shape: RoundedRectangleBorder(
@@ -575,7 +575,7 @@ class _CustomBuildState extends State<CustomBuild> {
                       ),
                     ),
                     child: ListTile(
-                      contentPadding: EdgeInsets.symmetric(vertical: 8, horizontal: 12),
+                      contentPadding: const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
                       leading: Container(
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(8),
@@ -585,7 +585,7 @@ class _CustomBuildState extends State<CustomBuild> {
                       ),
                       title: Text(
                         selectedGpus!['model']!,
-                        style: TextStyle(
+                        style: const TextStyle(
                           color: Colors.white,
                           fontSize: 16,
                           fontWeight: FontWeight.bold,
@@ -594,13 +594,13 @@ class _CustomBuildState extends State<CustomBuild> {
                       ),
                       subtitle: Text(
                         ' ${selectedGpus!['price']} RS',
-                        style: TextStyle(color: Colors.green, fontSize: 14),
+                        style: const TextStyle(color: Colors.green, fontSize: 14),
                       ),
                       trailing: Row(
                         mainAxisSize: MainAxisSize.min,
                         children: [
                           IconButton(
-                            icon: Icon(Icons.delete, color: Colors.red),
+                            icon: const Icon(Icons.delete, color: Colors.red),
                             onPressed: () {
                               setState(() {
                                 selectedGpus = null;
@@ -608,7 +608,7 @@ class _CustomBuildState extends State<CustomBuild> {
                             },
                           ),
                           IconButton(
-                            icon: Icon(Icons.update, color: Colors.greenAccent), // Change color here
+                            icon: const Icon(Icons.update, color: Colors.greenAccent), // Change color here
                             onPressed: () async {
                               final updatedGpu = await Navigator.push(
                                 context,
@@ -633,12 +633,12 @@ class _CustomBuildState extends State<CustomBuild> {
                 else
                   Container(),
 
-                Divider(color: Colors.transparent),
+                const Divider(color: Colors.transparent),
 
                 // Power Supply Card
                 if (selectedPowerSupplies != null)
                   Card(
-                    margin: EdgeInsets.symmetric(vertical: 4),
+                    margin: const EdgeInsets.symmetric(vertical: 4),
                     elevation: 5,
                     color: Colors.black,
                     shape: RoundedRectangleBorder(
@@ -649,7 +649,7 @@ class _CustomBuildState extends State<CustomBuild> {
                       ),
                     ),
                     child: ListTile(
-                      contentPadding: EdgeInsets.symmetric(vertical: 8, horizontal: 12),
+                      contentPadding: const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
                       leading: Container(
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(8),
@@ -659,7 +659,7 @@ class _CustomBuildState extends State<CustomBuild> {
                       ),
                       title: Text(
                         selectedPowerSupplies!['name']!,
-                        style: TextStyle(
+                        style: const TextStyle(
                           color: Colors.white,
                           fontSize: 16,
                           fontWeight: FontWeight.bold,
@@ -668,13 +668,13 @@ class _CustomBuildState extends State<CustomBuild> {
                       ),
                       subtitle: Text(
                         ' ${selectedPowerSupplies!['price_pkr']} RS',
-                        style: TextStyle(color: Colors.green, fontSize: 14),
+                        style: const TextStyle(color: Colors.green, fontSize: 14),
                       ),
                       trailing: Row(
                         mainAxisSize: MainAxisSize.min,
                         children: [
                           IconButton(
-                            icon: Icon(Icons.delete, color: Colors.red),
+                            icon: const Icon(Icons.delete, color: Colors.red),
                             onPressed: () {
                               setState(() {
                                 selectedPowerSupplies = null;
@@ -682,7 +682,7 @@ class _CustomBuildState extends State<CustomBuild> {
                             },
                           ),
                           IconButton(
-                            icon: Icon(Icons.update, color: Colors.greenAccent), // Change color here
+                            icon: const Icon(Icons.update, color: Colors.greenAccent), // Change color here
                             onPressed: () async {
                               final updatedPowerSupply = await Navigator.push(
                                 context,
@@ -707,12 +707,12 @@ class _CustomBuildState extends State<CustomBuild> {
                 else
                   Container(),
 
-                Divider(color: Colors.transparent),
+                const Divider(color: Colors.transparent),
 
                 // Case Card
                 if (selectedCases != null)
                   Card(
-                    margin: EdgeInsets.symmetric(vertical: 4),
+                    margin: const EdgeInsets.symmetric(vertical: 4),
                     elevation: 5,
                     color: Colors.black,
                     shape: RoundedRectangleBorder(
@@ -723,7 +723,7 @@ class _CustomBuildState extends State<CustomBuild> {
                       ),
                     ),
                     child: ListTile(
-                      contentPadding: EdgeInsets.symmetric(vertical: 8, horizontal: 12),
+                      contentPadding: const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
                       leading: Container(
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(8),
@@ -733,7 +733,7 @@ class _CustomBuildState extends State<CustomBuild> {
                       ),
                       title: Text(
                         selectedCases!['name']!,
-                        style: TextStyle(
+                        style: const TextStyle(
                           color: Colors.white,
                           fontSize: 16,
                           fontWeight: FontWeight.bold,
@@ -742,13 +742,13 @@ class _CustomBuildState extends State<CustomBuild> {
                       ),
                       subtitle: Text(
                         ' ${selectedCases!['price_pkr']} RS',
-                        style: TextStyle(color: Colors.green, fontSize: 14),
+                        style: const TextStyle(color: Colors.green, fontSize: 14),
                       ),
                       trailing: Row(
                         mainAxisSize: MainAxisSize.min,
                         children: [
                           IconButton(
-                            icon: Icon(Icons.delete, color: Colors.red),
+                            icon: const Icon(Icons.delete, color: Colors.red),
                             onPressed: () {
                               setState(() {
                                 selectedCases = null;
@@ -756,7 +756,7 @@ class _CustomBuildState extends State<CustomBuild> {
                             },
                           ),
                           IconButton(
-                            icon: Icon(Icons.update, color: Colors.greenAccent), // Change color here
+                            icon: const Icon(Icons.update, color: Colors.greenAccent), // Change color here
                             onPressed: () async {
                               final updatedCase = await Navigator.push(
                                 context,
@@ -781,12 +781,12 @@ class _CustomBuildState extends State<CustomBuild> {
                 else
                   Container(),
 
-                Divider(color: Colors.transparent),
+                const Divider(color: Colors.transparent),
 
                 // Case Card
                 if (selectedSsds != null)
                   Card(
-                    margin: EdgeInsets.symmetric(vertical: 4),
+                    margin: const EdgeInsets.symmetric(vertical: 4),
                     elevation: 5,
                     color: Colors.black,
                     shape: RoundedRectangleBorder(
@@ -797,7 +797,7 @@ class _CustomBuildState extends State<CustomBuild> {
                       ),
                     ),
                     child: ListTile(
-                      contentPadding: EdgeInsets.symmetric(vertical: 8, horizontal: 12),
+                      contentPadding: const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
                       leading: Container(
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(8),
@@ -807,7 +807,7 @@ class _CustomBuildState extends State<CustomBuild> {
                       ),
                       title: Text(
                         selectedSsds!['name']!,
-                        style: TextStyle(
+                        style: const TextStyle(
                           color: Colors.white,
                           fontSize: 16,
                           fontWeight: FontWeight.bold,
@@ -816,13 +816,13 @@ class _CustomBuildState extends State<CustomBuild> {
                       ),
                       subtitle: Text(
                         ' ${selectedSsds!['price']} RS',
-                        style: TextStyle(color: Colors.green, fontSize: 14),
+                        style: const TextStyle(color: Colors.green, fontSize: 14),
                       ),
                       trailing: Row(
                         mainAxisSize: MainAxisSize.min,
                         children: [
                           IconButton(
-                            icon: Icon(Icons.delete, color: Colors.red),
+                            icon: const Icon(Icons.delete, color: Colors.red),
                             onPressed: () {
                               setState(() {
                                 selectedSsds = null;
@@ -830,7 +830,7 @@ class _CustomBuildState extends State<CustomBuild> {
                             },
                           ),
                           IconButton(
-                            icon: Icon(Icons.update, color: Colors.greenAccent), // Change color here
+                            icon: const Icon(Icons.update, color: Colors.greenAccent), // Change color here
                             onPressed: () async {
                               final updatedSsds = await Navigator.push(
                                 context,
@@ -894,11 +894,11 @@ class _CustomBuildState extends State<CustomBuild> {
             ),
           );
         },
-        label: Text(
+        label: const Text(
           'Show Build',
           style: TextStyle(fontWeight: FontWeight.bold, fontSize: 17),
         ),
-        icon: Icon(Icons.check_circle),
+        icon: const Icon(Icons.check_circle),
         backgroundColor: Colors.green,
       )
           : null,

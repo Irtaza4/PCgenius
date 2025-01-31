@@ -1,6 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:pc_genius/ui/screens/home_screen.dart';
 import 'package:pc_genius/ui/screens/signup_screen.dart';
 
@@ -32,7 +31,7 @@ class _LoginScreenState extends State<LoginScreen> {
     });
     _auth.signInWithEmailAndPassword(email: emailcontroller.text, password: passwordcontroller.text).then((value){
       Utilas().toastMessage('Login Successfully!');
-      Navigator.push(context, MaterialPageRoute(builder: (context)=>HomeScreen()));
+      Navigator.push(context, MaterialPageRoute(builder: (context)=>const HomeScreen()));
       setState(() {
         loading =false;
       });
@@ -55,7 +54,7 @@ class _LoginScreenState extends State<LoginScreen> {
           centerTitle: true,
           backgroundColor: Colors.transparent, // Make the default background transparent
           flexibleSpace: Container(
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
           gradient: LinearGradient(
           begin: Alignment.topLeft,  // Start at the top-left
           end: Alignment.bottomRight,  // End at the bottom-right
@@ -81,13 +80,19 @@ class _LoginScreenState extends State<LoginScreen> {
                           height: 250,
                           width: 250,),
                         ),
-                        SizedBox(height: 10,),
+                        const SizedBox(height: 10,),
                         TextFormField(
                             controller: emailcontroller,
                             keyboardType: TextInputType.emailAddress,
-                            style: TextStyle(color: Colors.white),
-                            decoration: InputDecoration(
+                            style: const TextStyle(color: Colors.white),
+                            decoration: const InputDecoration(
+                                focusedBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(color: Colors.green)
+                                ),
+                                labelStyle: TextStyle(color: Colors.grey),
+                                border: OutlineInputBorder(),
                                 hintText: 'Email',
+                                labelText: 'Email',
                                 helperText: 'Enter email e.g jon@gmail.com' ,
                                 prefixIcon: Icon(Icons.alternate_email,color: Colors.white,)),
                             validator: (value){
@@ -101,15 +106,19 @@ class _LoginScreenState extends State<LoginScreen> {
             
             
                         ),
-                        SizedBox(height: 10,),
+                        const SizedBox(height: 10,),
                         TextFormField(
                             controller: passwordcontroller,
                             obscureText: true,
-                            style: TextStyle(color: Colors.white),
-                            decoration: InputDecoration(
-            
+                            style: const TextStyle(color: Colors.white),
+                            decoration: const InputDecoration(
+                                focusedBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(color: Colors.green)
+                                ),
+                                labelStyle: TextStyle(color: Colors.grey),
+                                border: OutlineInputBorder(),
                                 hintText: 'Password',
-            
+                                labelText: 'Password',
                                 helperText: 'Enter your password' ,
                                 prefixIcon: Icon(Icons.lock_open_outlined,color: Colors.white,)),
                             validator: (value){
@@ -122,7 +131,7 @@ class _LoginScreenState extends State<LoginScreen> {
             
                       ],
                     )),
-                SizedBox(height: 50,),
+                const SizedBox(height: 50,),
             
                 RoundButton(title: 'Login',
                   loading: loading,
@@ -131,17 +140,17 @@ class _LoginScreenState extends State<LoginScreen> {
                       login();
                     }
                   },),
-                SizedBox(height: 10,),
+                const SizedBox(height: 10,),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text("Don't have an account?",style: TextStyle(color: Colors.white), ),
+                    const Text("Don't have an account?",style: TextStyle(color: Colors.white), ),
                     TextButton(onPressed: (){
-                      Navigator.push(context, MaterialPageRoute(builder: (context)=>SignupScreen()));
-                    }, child: Text('Sign up',style: TextStyle(color: Colors.green,fontWeight: FontWeight.w900),))
+                      Navigator.push(context, MaterialPageRoute(builder: (context)=>const SignupScreen()));
+                    }, child: const Text('Sign up',style: TextStyle(color: Colors.green,fontWeight: FontWeight.w900),))
                   ],
                 ),
-                SizedBox(height: 50),
+                const SizedBox(height: 50),
             
               ],
             ),

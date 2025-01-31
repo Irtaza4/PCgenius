@@ -25,7 +25,7 @@ class _GPUScreenState extends State<GPUScreen> {
       backgroundColor: Colors.black,
       // Setting the scaffold background color to black
       appBar: AppBar(
-        title: Text(
+        title: const Text(
           'GPU VARIANTS',
           style: TextStyle(
             fontWeight: FontWeight.bold,
@@ -39,22 +39,22 @@ class _GPUScreenState extends State<GPUScreen> {
               _auth.signOut().then((value) {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => LoginScreen()),
+                  MaterialPageRoute(builder: (context) => const LoginScreen()),
                 );
               }).onError((error, stackTrace) {
                 Utils().toastMessage(error.toString());
               });
             },
-            icon: Icon(Icons.logout_outlined, color: Colors.white),
+            icon: const Icon(Icons.logout_outlined, color: Colors.white),
           ),
-          SizedBox(width: 10),
+          const SizedBox(width: 10),
         ],
         elevation: 0,
         centerTitle: true,
         automaticallyImplyLeading: true,
         backgroundColor: Colors.transparent,
         flexibleSpace: Container(
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
             gradient: LinearGradient(
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
@@ -72,7 +72,7 @@ class _GPUScreenState extends State<GPUScreen> {
           Expanded(
             child: FirebaseAnimatedList(
               query: ref, // Firebase reference to fetch GPUs
-              defaultChild: Center(
+              defaultChild: const Center(
                 child: CircularProgressIndicator(
                   valueColor: AlwaysStoppedAnimation<Color>(Colors.greenAccent),
                   // Green accent color
@@ -99,7 +99,7 @@ class _GPUScreenState extends State<GPUScreen> {
                   children: [
                     ListTile(
                       contentPadding:
-                          EdgeInsets.symmetric(vertical: 10, horizontal: 8),
+                          const EdgeInsets.symmetric(vertical: 10, horizontal: 8),
                       leading: Container(
                         width: 60,
                         height: 90,
@@ -114,7 +114,7 @@ class _GPUScreenState extends State<GPUScreen> {
                               color: Colors.greenAccent.withOpacity(0.5),
                               // Green accent shadow
                               blurRadius: 2,
-                              offset: Offset(2, 4), // Shadow offset
+                              offset: const Offset(2, 4), // Shadow offset
                             ),
                           ],
                           image: DecorationImage(
@@ -125,7 +125,7 @@ class _GPUScreenState extends State<GPUScreen> {
                       ),
                       title: Text(
                         model,
-                        style: TextStyle(
+                        style: const TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.bold,
                           color: Colors.white,
@@ -135,18 +135,18 @@ class _GPUScreenState extends State<GPUScreen> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           _buildInfoRow('VRAM: ', vram),
-                          SizedBox(height: 5),
+                          const SizedBox(height: 5),
                           _buildInfoRow('Length: ', length),
-                          SizedBox(height: 5),
+                          const SizedBox(height: 5),
                           _buildInfoRow('Base Clock: ', baseClock),
-                          SizedBox(height: 5),
+                          const SizedBox(height: 5),
                           _buildInfoRow('Boost Clock: ', boostClock),
-                          SizedBox(height: 5),
+                          const SizedBox(height: 5),
                           _buildInfoRow('Color: ', color),
-                          SizedBox(height: 5),
+                          const SizedBox(height: 5),
                           Row(
                             children: [
-                              Text(
+                              const Text(
                                 'Price: ',
                                 style: TextStyle(
                                     color: Colors.white,
@@ -155,7 +155,7 @@ class _GPUScreenState extends State<GPUScreen> {
                               Flexible(
                                 child: Text(
                                   '$price ',
-                                  style: TextStyle(color: Colors.greenAccent),
+                                  style: const TextStyle(color: Colors.greenAccent),
                                   overflow: TextOverflow
                                       .ellipsis, // Prevents overflow
                                 ),
@@ -187,7 +187,7 @@ class _GPUScreenState extends State<GPUScreen> {
                         ),
                       ),
                     ),
-                    Divider(color: Colors.grey, thickness: 1),
+                    const Divider(color: Colors.grey, thickness: 1),
                     // Grey line between variants
                   ],
                 );
@@ -205,12 +205,12 @@ class _GPUScreenState extends State<GPUScreen> {
       children: [
         Text(
           label,
-          style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+          style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
         ),
         Flexible(
           child: Text(
             value,
-            style: TextStyle(color: Colors.white),
+            style: const TextStyle(color: Colors.white),
             overflow: TextOverflow.ellipsis, // Prevents text overflow
           ),
         ),

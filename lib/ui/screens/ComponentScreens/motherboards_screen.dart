@@ -22,7 +22,7 @@ class _MotherboardsScreenState extends State<MotherboardsScreen> {
     return Scaffold(
       backgroundColor: Colors.black, // Setting the scaffold background color to black
       appBar: AppBar(
-        title: Text(
+        title: const Text(
           'MOTHERBOARDS VARIANTS',
           style: TextStyle(
             fontWeight: FontWeight.bold,
@@ -36,22 +36,22 @@ class _MotherboardsScreenState extends State<MotherboardsScreen> {
               _auth.signOut().then((value) {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => LoginScreen()),
+                  MaterialPageRoute(builder: (context) => const LoginScreen()),
                 );
               }).onError((error, stackTrace) {
                 Utils().toastMessage(error.toString());
               });
             },
-            icon: Icon(Icons.logout_outlined, color: Colors.white),
+            icon: const Icon(Icons.logout_outlined, color: Colors.white),
           ),
-          SizedBox(width: 10),
+          const SizedBox(width: 10),
         ],
         elevation: 0,
         centerTitle: true,
         automaticallyImplyLeading: true,
         backgroundColor: Colors.transparent,
         flexibleSpace: Container(
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
             gradient: LinearGradient(
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
@@ -65,7 +65,7 @@ class _MotherboardsScreenState extends State<MotherboardsScreen> {
           Expanded(
             child: FirebaseAnimatedList(
               query: ref,
-              defaultChild: Center(
+              defaultChild: const Center(
                 child: CircularProgressIndicator(
                   valueColor: AlwaysStoppedAnimation<Color>(Colors.greenAccent),
                   strokeWidth: 4.0,
@@ -88,7 +88,7 @@ class _MotherboardsScreenState extends State<MotherboardsScreen> {
                 return Column(
                   children: [
                     ListTile(
-                      contentPadding: EdgeInsets.symmetric(vertical: 10, horizontal: 8),
+                      contentPadding: const EdgeInsets.symmetric(vertical: 10, horizontal: 8),
                       leading: Container(
                         width: 60,
                         height: 90,
@@ -99,7 +99,7 @@ class _MotherboardsScreenState extends State<MotherboardsScreen> {
                             BoxShadow(
                               color: Colors.greenAccent.withOpacity(0.5),
                               blurRadius: 2,
-                              offset: Offset(2, 4),
+                              offset: const Offset(2, 4),
                             ),
                           ],
                           image: DecorationImage(
@@ -110,7 +110,7 @@ class _MotherboardsScreenState extends State<MotherboardsScreen> {
                       ),
                       title: Text(
                         name,
-                        style: TextStyle(
+                        style: const TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.bold,
                           color: Colors.white,
@@ -120,25 +120,25 @@ class _MotherboardsScreenState extends State<MotherboardsScreen> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           _buildInfoRow('Slots: ', slots),
-                          SizedBox(height: 5),
+                          const SizedBox(height: 5),
                           _buildInfoRow('Socket: ', socket),
-                          SizedBox(height: 5),
+                          const SizedBox(height: 5),
                           _buildInfoRow('Max Memory: ', maxMemory),
-                          SizedBox(height: 5),
+                          const SizedBox(height: 5),
                           _buildInfoRow('Form Factor: ', formFactor),
-                          SizedBox(height: 5),
+                          const SizedBox(height: 5),
                           _buildInfoRow('Color: ', color),
-                          SizedBox(height: 5),
+                          const SizedBox(height: 5),
                           Row(
                             children: [
-                              Text(
+                              const Text(
                                 'Price: ',
                                 style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
                               ),
                               Flexible(
                                 child: Text(
                                   '$price ',
-                                  style: TextStyle(color: Colors.green),
+                                  style: const TextStyle(color: Colors.green),
                                   overflow: TextOverflow.ellipsis,
                                 ),
                               ),
@@ -169,7 +169,7 @@ class _MotherboardsScreenState extends State<MotherboardsScreen> {
                         ),
                       ),
                     ),
-                    Divider(color: Colors.grey, thickness: 1),
+                    const Divider(color: Colors.grey, thickness: 1),
                   ],
                 );
               },
@@ -186,12 +186,12 @@ class _MotherboardsScreenState extends State<MotherboardsScreen> {
       children: [
         Text(
           label,
-          style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+          style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
         ),
         Flexible(
           child: Text(
             value,
-            style: TextStyle(color: Colors.white),
+            style: const TextStyle(color: Colors.white),
             overflow: TextOverflow.ellipsis,
           ),
         ),

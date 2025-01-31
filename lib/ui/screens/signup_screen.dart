@@ -17,7 +17,7 @@ class _SignupScreenState extends State<SignupScreen> {
   final emailcontroller = TextEditingController();
   final passwordcontroller = TextEditingController();
   final confirmPasswordController = TextEditingController();
-  FirebaseAuth _auth = FirebaseAuth.instance;
+  final FirebaseAuth _auth = FirebaseAuth.instance;
   @override
 
   void dispose() {
@@ -38,7 +38,7 @@ class _SignupScreenState extends State<SignupScreen> {
         loading=false;
       });
       Utilas().toastMessage('Account Created!');
-      Navigator.push(context, MaterialPageRoute(builder: (context)=>LoginScreen()));
+      Navigator.push(context, MaterialPageRoute(builder: (context)=>const LoginScreen()));
     }).onError((error, stackTrace) {
       Utils().toastMessage(error.toString());
       setState(() {
@@ -56,7 +56,7 @@ class _SignupScreenState extends State<SignupScreen> {
         centerTitle: true,
         backgroundColor:  Colors.transparent, // Make the default background transparent
           flexibleSpace: Container(
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               gradient: LinearGradient(
                 begin: Alignment.topLeft,  // Start at the top-left
                 end: Alignment.bottomRight,  // End at the bottom-right
@@ -86,8 +86,14 @@ class _SignupScreenState extends State<SignupScreen> {
                       TextFormField(
                           controller: emailcontroller,
                           keyboardType: TextInputType.emailAddress,
-                          style: TextStyle(color: Colors.white),
-                          decoration: InputDecoration(
+                          style: const TextStyle(color: Colors.white),
+                          decoration: const InputDecoration(
+                              focusedBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(color: Colors.green)
+                              ),
+                              labelStyle: TextStyle(color: Colors.grey),
+                              border: OutlineInputBorder(),
+                              labelText: 'Email',
                               hintText: 'Email',
                               helperText: 'enter email e.g jon@gmail.com' ,
                               prefixIcon: Icon(Icons.alternate_email,color: Colors.white,)),
@@ -102,14 +108,19 @@ class _SignupScreenState extends State<SignupScreen> {
           
           
                       ),
-                      SizedBox(height: 10,),
+                      const SizedBox(height: 10,),
                       TextFormField(
                           controller: passwordcontroller,
                           obscureText: true,
-                          style: TextStyle(color: Colors.white),
+                          style: const TextStyle(color: Colors.white),
           
-                          decoration: InputDecoration(
-          
+                          decoration: const InputDecoration(
+                              focusedBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(color: Colors.green)
+                              ),
+                              labelStyle: TextStyle(color: Colors.grey),
+                              border: OutlineInputBorder(),
+                              labelText: 'Password',
                               hintText: 'Password',
           
                               helperText: 'Enter your password' ,
@@ -121,14 +132,23 @@ class _SignupScreenState extends State<SignupScreen> {
                             return null;
                           }
                       ),
-                      SizedBox(height: 20),
+                      const SizedBox(height: 20),
                       // Confirm Password field
                       TextFormField(
                         controller: confirmPasswordController,
                         keyboardType: TextInputType.visiblePassword,
-                        style: TextStyle(color: Colors.white),
+                        style: const TextStyle(color: Colors.white),
                         obscureText: true,  // To hide confirm password text
-                        decoration: InputDecoration(
+                        decoration: const InputDecoration(
+                          focusedBorder: OutlineInputBorder(
+                            borderSide: BorderSide(color: Colors.green)
+                          ),
+                          labelStyle: TextStyle(color: Colors.grey),
+                          border: OutlineInputBorder(
+
+                          ),
+                          labelText: 'Confirm Password',
+
                           hintText: 'Confirm Password',
                           helperText: 'Re-enter your password',
 
@@ -152,7 +172,7 @@ class _SignupScreenState extends State<SignupScreen> {
           
                     ],
                   )),
-              SizedBox(height: 20,),
+              const SizedBox(height: 20,),
           
               RoundButton(title: 'Sign Up',
                 loading: loading,
@@ -161,14 +181,14 @@ class _SignupScreenState extends State<SignupScreen> {
                     login();
                   }
                 },),
-              SizedBox(height: 10,),
+              const SizedBox(height: 10,),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text("Already have an account?",style: TextStyle(color: Colors.white), ),
+                  const Text("Already have an account?",style: TextStyle(color: Colors.white), ),
                   TextButton(onPressed: (){
-                    Navigator.push(context, MaterialPageRoute(builder: (context)=>LoginScreen()));
-                  }, child: Text('Login',style: TextStyle(color: Colors.green,fontWeight: FontWeight.w900),))
+                    Navigator.push(context, MaterialPageRoute(builder: (context)=>const LoginScreen()));
+                  }, child: const Text('Login',style: TextStyle(color: Colors.green,fontWeight: FontWeight.w900),))
                 ],
               )
             ],
